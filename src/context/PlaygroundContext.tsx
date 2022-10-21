@@ -43,38 +43,39 @@ export interface FolderType {
   [key: string]: FolderT;
 }
 
+const languageMap: {
+  [key: string]: {
+    defaultCode: string;
+  };
+} = {
+  "c++": {
+    defaultCode:
+      "# include <iostream>\n" +
+      "\n" +
+      "int main() {\n" +
+      "    // your code here\n" +
+      "    return 0;\n" +
+      "}",
+  },
+  python: {
+    defaultCode: "# your python code here",
+  },
+  javascript: {
+    defaultCode: "// your javascript code here",
+  },
+  java: {
+    defaultCode: `import java.util.*;\nimport java.lang.*;\nimport java.io.*;\n\npublic class Main\n{\n\tpublic static void main (String[] args) throws java.lang.Exception\n\t{\n\t\t//your code here\n\t}\n}`,
+  },
+};
+
 const initialItems = {
   [uuid()]: {
     title: "Folder Title 1",
     items: {
       [uuid()]: {
         title: "Stack Implementation",
-        language: "C++",
-      },
-      [uuid()]: {
-        title: "Queue Implementation",
-        language: "C++",
-      },
-      [uuid()]: {
-        title: "XYZ Implementation",
-        language: "C++",
-      },
-    },
-  },
-  [uuid()]: {
-    title: "Folder Title 2",
-    items: {
-      [uuid()]: {
-        title: "1 Implementation",
-        language: "C++",
-      },
-      [uuid()]: {
-        title: "2 Implementation",
-        language: "C++",
-      },
-      [uuid()]: {
-        title: "3 Implementation",
-        language: "C++",
+        language: "c++",
+        code: languageMap["c++"].defaultCode,
       },
     },
   },
@@ -86,9 +87,11 @@ export default function PlaygroundProvider({ children }: { children: any }) {
       localStorage.getItem("playground-data") as string
     );
     localData =
-    localData === undefined ||
-    localData === null ||
-     Object.keys(localData).length === 0 ? null : localData;
+      localData === undefined ||
+      localData === null ||
+      Object.keys(localData).length === 0
+        ? null
+        : localData;
     return localData || initialItems; // null || anything -> anything
   });
 
@@ -125,6 +128,7 @@ export default function PlaygroundProvider({ children }: { children: any }) {
       newState[folderId].items[uuid()] = {
         title: cardTitle,
         language: cardLanguage,
+        code: languageMap[cardLanguage].defaultCode,
       };
       return newState;
     });
@@ -145,6 +149,7 @@ export default function PlaygroundProvider({ children }: { children: any }) {
           [uuid()]: {
             title: cardTitle,
             language: cardLanguage,
+            code: languageMap[cardLanguage].defaultCode,
           },
         },
       };
