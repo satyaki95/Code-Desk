@@ -15,6 +15,6 @@ export default createGlobalStyle`
     }
 
     a:hover, button:hover, svg:hover {
-        opacity: 0.8;
+        opacity: 0.8; 
     }
 `;
