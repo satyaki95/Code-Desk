@@ -7,17 +7,15 @@ import styled from "styled-components";
 
 const InputWithSelect = styled.div`
   display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  grid-template-columns: 0.5fr 1fr;
   row-gap: 1rem;
   column-gap: 1rem;
   margin-top: 1.2rem;
   align-items: center;
-
   input {
     flex-grow: 1;
     height: 2rem;
   }
-
   button {
     background: #241f21;
     height: 2rem;
