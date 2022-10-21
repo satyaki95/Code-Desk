@@ -23,6 +23,7 @@
     "json-schema" "^0.4.0"
     "jsonpointer" "^5.0.0"
     "leven" "^3.1.0"
+    
 
 "@babel/code-frame@^7.0.0":
   "integrity" "sha512-a9gxpmdXtZEInkCSHUJDLHZVBgb1QS0jhss4cPP93EW7s+uC5bikET2twEF3KV+7rDblJcmNvTR7VJejqd2C2g=="
