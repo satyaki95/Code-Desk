@@ -17,7 +17,6 @@ const ModalContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 2;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,12 +50,10 @@ export const Input = styled.div`
   padding: 1.5rem 0;
   gap: 2rem;
   padding-bottom: 0;
-
   input {
     flex-grow: 1;
     height: 2rem;
   }
-
   button {
     background: #241f21;
     height: 2rem;
