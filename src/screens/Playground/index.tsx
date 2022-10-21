@@ -49,7 +49,7 @@ const Playground = () => {
         </Consoles>
       </MainApp>
       {isOpen.value === true ? <Modal /> : <></>}
-    </div>
+    </div> 
   );
 };
 

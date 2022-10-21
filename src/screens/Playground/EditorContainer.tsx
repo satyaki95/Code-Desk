@@ -220,7 +220,7 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
         <RunCode>Run Code</RunCode>
       </LowerToolbar>
       {/* Lower Toolbar Ends */}
-    </StyledEditorContainer>
+    </StyledEditorContainer> 
   );
 };
 
