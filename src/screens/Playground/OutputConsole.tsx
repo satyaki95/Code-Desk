@@ -55,7 +55,7 @@ const OutputConsole = () => {
         </button>
       </Header>
       <OutputArea></OutputArea>
-    </Console>
+    </Console> 
   );
 };
 

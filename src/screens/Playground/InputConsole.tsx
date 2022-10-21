@@ -58,7 +58,7 @@ const InputConsole = () => {
         </button>
       </Header>
       <TextArea></TextArea>
-    </Console>
+    </Console> 
   );
 };
 
