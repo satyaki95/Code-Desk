@@ -6,6 +6,8 @@ import OutputConsole from "./OutputConsole";
 import { useParams } from "react-router-dom";
 import { PlaygroundContext } from "../../context/PlaygroundContext";
 import styled from "styled-components";
+import { ModalContext } from "../../context/ModalContext";
+import Modal from "../../components/Modal";
 
 const MainApp = styled.div`
   display: grid;
@@ -22,21 +24,31 @@ const Consoles = styled.div`
 const Playground = () => {
   const { folderId, playgroundId } = useParams();
 
+  // access isOpen field
+  const { isOpen } = useContext(ModalContext)!;
+
   // access all playgrounds
   const { folders } = useContext(PlaygroundContext)!;
-  const { title, language } =
+  const { title, language, code } =
     folders[folderId as string].items[playgroundId as string];
 
   return (
     <div>
       <Navbar />
       <MainApp>
-        <EditorContainer />
+        <EditorContainer
+          title={title}
+          language={language}
+          code={code}
+          folderId={folderId as string}
+          cardId={playgroundId as string}
+        />
         <Consoles>
           <InputConsole />
           <OutputConsole />
         </Consoles>
       </MainApp>
+      {isOpen.value === true ? <Modal /> : <></>}
     </div>
   );
 };

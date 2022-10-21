@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BiEditAlt, BiExport, BiFullscreen, BiImport } from "react-icons/bi";
 import styled from "styled-components";
 import CodeEditor from "./CodeEditor";
 import Select from "react-select";
+import { ModalContext } from "../../context/ModalContext";
 
 const StyledEditorContainer = styled.div`
   display: flex;
@@ -75,6 +76,15 @@ const RunCode = styled.button`
   border-radius: 2rem;
 `;
 
+const SaveCode = styled.button`
+  padding: 0.4rem 1rem;
+  background-color: #0097d7 !important;
+  color: white;
+  font-weight: 700;
+  border-radius: 2rem;
+  border: 0;
+`;
+
 const SelectBars = styled.div`
   display: flex;
   align-items: center;
@@ -89,9 +99,23 @@ const SelectBars = styled.div`
   }
 `;
 
-const EditorContainer = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
-  const [selectedTheme, setSelectedTheme] = useState(null);
+interface EditorContainerProps {
+  title: string;
+  language: string;
+  code: string;
+  folderId: string;
+  cardId: string;
+}
+
+const EditorContainer: React.FC<EditorContainerProps> = ({
+  title,
+  language,
+  code,
+  folderId,
+  cardId,
+}) => {
+  // import openModal function
+  const { openModal } = useContext(ModalContext)!;
 
   const languageOptions = [
     { value: "c++", label: "C++" },
@@ -111,6 +135,18 @@ const EditorContainer = () => {
     { value: "bespin", label: "bespin" },
   ];
 
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    for (let i = 0; i < languageOptions.length; i++) {
+      if (languageOptions[i].value === language) return languageOptions[i];
+    }
+    return languageOptions[0];
+  });
+
+  const [selectedTheme, setSelectedTheme] = useState({
+    value: "githubDark",
+    label: "githubDark",
+  });
+
   const handleChangeLanguage = (selectedOption: any) => {
     setSelectedLanguage(selectedOption);
   };
@@ -124,12 +160,26 @@ const EditorContainer = () => {
       {/* Upper Toolbar Begins */}
       <UpperToolbar>
         <Title>
-          <h3>Stack Implementation</h3>
-          <button>
+          <h3>{title}</h3>
+          <button
+            onClick={() => {
+              // open a modal
+              // to edit card title
+              openModal({
+                value: true,
+                type: "1",
+                identifer: {
+                  folderId: folderId,
+                  cardId: cardId,
+                },
+              });
+            }}
+          >
             <BiEditAlt />
           </button>
         </Title>
         <SelectBars>
+          <SaveCode>Save Code</SaveCode>
           <Select
             value={selectedLanguage}
             options={languageOptions}
@@ -145,7 +195,11 @@ const EditorContainer = () => {
       {/* Upper Toolbar Ends */}
 
       {/* Code Editor Begins */}
-      <CodeEditor />
+      <CodeEditor
+        currentLanguage={selectedLanguage.value}
+        currentTheme={selectedTheme.value}
+        currentCode={code}
+      />
       {/* Code Editor Ends */}
 
       {/* Lower Toolbar Begins */}
