@@ -12,10 +12,12 @@ const InputWithSelect = styled.div`
   column-gap: 1rem;
   margin-top: 1.2rem;
   align-items: center;
+
   input {
     flex-grow: 1;
     height: 2rem;
   }
+
   button {
     background: #241f21;
     height: 2rem;
