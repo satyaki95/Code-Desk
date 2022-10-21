@@ -99,7 +99,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           lintKeymap: true,
         }}
       />
-    </CodeEditorContainer> 
+    </CodeEditorContainer>  
   );
 };
 
