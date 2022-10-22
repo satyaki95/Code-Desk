@@ -34,7 +34,7 @@ const Page404 = () => {
         <h1>Oops, Page not found.</h1>
         <p>Redirecting to Home!</p>
       </ContentContainer>
-    </PageContainer> 
+    </PageContainer>
   );
 };
 

@@ -89,7 +89,7 @@ const LeftPane = () => {
           <span>+</span> Create New Playground
         </AddNewButton>
       </ContentContainer>
-    </StyledLeftPane> 
+    </StyledLeftPane>
   );
 };
 

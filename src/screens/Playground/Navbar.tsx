@@ -48,7 +48,7 @@ const Navbar = () => {
           <span>Code</span> Deck
         </MainHeading>
       </NavbarContent>
-    </NavbarContainer> 
+    </NavbarContainer>
   );
 };
 

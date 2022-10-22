@@ -29,12 +29,14 @@ interface CodeEditorProps {
   currentLanguage: string;
   currentTheme: string;
   currentCode: string;
+  setCurrentCode: (newCode: string) => void;
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
   currentLanguage,
   currentTheme,
   currentCode,
+  setCurrentCode,
 }) => {
   // code editor configuration
   const [theme, setTheme] = useState<any>(githubDark);
@@ -66,6 +68,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       <CodeMirror
         theme={theme}
         value={currentCode}
+        onChange={(value: string) => {
+          setCurrentCode(value);
+        }}
         height='100%'
         extensions={[
           lang,
@@ -99,7 +104,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           lintKeymap: true,
         }}
       />
-    </CodeEditorContainer>  
+    </CodeEditorContainer>
   );
 };
 

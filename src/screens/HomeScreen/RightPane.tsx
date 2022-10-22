@@ -22,7 +22,7 @@ const StyledRightPane = styled.div`
   top: 0;
   width: 60%;
 `;
- 
+
 const Header = styled.div<HeaderProps>`
   display: flex;
   align-items: center;

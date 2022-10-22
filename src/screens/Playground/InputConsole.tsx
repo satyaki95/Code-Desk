@@ -47,18 +47,31 @@ const TextArea = styled.textarea`
   padding-top: 0.5rem;
 `;
 
-const InputConsole = () => {
+interface InputConsoleProps {
+  currentInput: string;
+  setCurrentInput: (newInput: string) => void;
+}
+
+const InputConsole: React.FC<InputConsoleProps> = ({
+  currentInput,
+  setCurrentInput,
+}) => {
   return (
     <Console>
       <Header>
         Input:
-        <button>
+        {/* <button>
           <BiImport />
           Import Input
-        </button>
+        </button> */}
       </Header>
-      <TextArea></TextArea>
-    </Console> 
+      <TextArea
+        value={currentInput}
+        onChange={(e) => {
+          setCurrentInput(e.target.value);
+        }}
+      ></TextArea>
+    </Console>
   );
 };
 

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CodeEditor from "./CodeEditor";
 import Select from "react-select";
 import { ModalContext } from "../../context/ModalContext";
+import { languageMap } from "../../context/PlaygroundContext";
 
 const StyledEditorContainer = styled.div`
   display: flex;
@@ -46,11 +47,13 @@ const LowerToolbar = styled.div`
   justify-content: space-between;
   padding: 0 2rem;
 
-  button {
+  button,
+  label {
     background: transparent;
     outline: 0;
     border: 0;
     font-size: 1.15rem;
+    cursor: pointer;
 
     display: flex;
     align-items: center;
@@ -101,18 +104,26 @@ const SelectBars = styled.div`
 
 interface EditorContainerProps {
   title: string;
-  language: string;
-  code: string;
+  currentLanguage: string;
+  currentCode: string;
+  setCurrentLanguage: (newLang: string) => void;
+  setCurrentCode: (newCode: string) => void;
   folderId: string;
   cardId: string;
+  saveCode: () => void;
+  runCode: () => void;
 }
 
 const EditorContainer: React.FC<EditorContainerProps> = ({
   title,
-  language,
-  code,
+  currentLanguage,
+  currentCode,
+  setCurrentLanguage,
+  setCurrentCode,
   folderId,
   cardId,
+  saveCode,
+  runCode,
 }) => {
   // import openModal function
   const { openModal } = useContext(ModalContext)!;
@@ -137,7 +148,8 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
 
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
     for (let i = 0; i < languageOptions.length; i++) {
-      if (languageOptions[i].value === language) return languageOptions[i];
+      if (languageOptions[i].value === currentLanguage)
+        return languageOptions[i];
     }
     return languageOptions[0];
   });
@@ -149,11 +161,42 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
 
   const handleChangeLanguage = (selectedOption: any) => {
     setSelectedLanguage(selectedOption);
+    setCurrentLanguage(selectedOption.value);
+    setCurrentCode(languageMap[selectedOption.value].defaultCode);
   };
 
   const handleChangeTheme = (selectedOption: any) => {
     setSelectedTheme(selectedOption);
   };
+
+  const getFile = (e: any) => {
+    const input = e.target;
+
+    // input = {
+    //   files: ["file1.txt", "file2.txt", ...]
+    // }
+
+    if ("files" in input && input.files.length > 0) {
+      placeFileContent(input.files[0]);
+    }
+  };
+
+  const placeFileContent = (file: any) => {
+    readFileContent(file)
+      .then((content) => {
+        setCurrentCode(content as string);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function readFileContent(file: any) {
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onload = (event) => resolve(event!.target!.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsText(file);
+    });
+  }
 
   return (
     <StyledEditorContainer>
@@ -179,7 +222,13 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
           </button>
         </Title>
         <SelectBars>
-          <SaveCode>Save Code</SaveCode>
+          <SaveCode
+            onClick={() => {
+              saveCode();
+            }}
+          >
+            Save Code
+          </SaveCode>
           <Select
             value={selectedLanguage}
             options={languageOptions}
@@ -198,29 +247,44 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
       <CodeEditor
         currentLanguage={selectedLanguage.value}
         currentTheme={selectedTheme.value}
-        currentCode={code}
+        currentCode={currentCode}
+        setCurrentCode={setCurrentCode}
       />
       {/* Code Editor Ends */}
 
       {/* Lower Toolbar Begins */}
       <LowerToolbar>
         <ButtonGroup>
-          <button>
+          {/* <button>
             <BiFullscreen />
             Full Screen
-          </button>
-          <button>
+          </button> */}
+          <label>
+            <input
+              type='file'
+              accept='.txt'
+              style={{ display: "none" }}
+              onChange={(e) => {
+                getFile(e);
+              }}
+            />
             <BiImport /> Import Code
-          </button>
-          <button>
+          </label>
+          {/* <button>
             <BiExport />
             Export Code
-          </button>
+          </button> */}
         </ButtonGroup>
-        <RunCode>Run Code</RunCode>
+        <RunCode
+          onClick={() => {
+            runCode();
+          }}
+        >
+          Run Code
+        </RunCode>
       </LowerToolbar>
       {/* Lower Toolbar Ends */}
-    </StyledEditorContainer> 
+    </StyledEditorContainer>
   );
 };
 

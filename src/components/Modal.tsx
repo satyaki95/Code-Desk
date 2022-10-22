@@ -8,6 +8,7 @@ import EditFolderTitle from "./modalTypes/EditFolderTitle";
 import NewCard from "./modalTypes/NewCard";
 import NewFolder from "./modalTypes/NewFolder";
 import NewFolderAndPlayground from "./modalTypes/NewFolderAndPlayground";
+import Loading from "./modalTypes/Loading";
 
 const ModalContainer = styled.div`
   background: rgba(0, 0, 0, 0.4);
@@ -109,6 +110,7 @@ const Modal = () => {
             identifer={isOpen.identifer}
           />
         )}
+        {isOpen.type === "6" && <Loading />}
       </ModalContent>
     </ModalContainer>
   );
