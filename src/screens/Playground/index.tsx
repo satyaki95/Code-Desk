@@ -71,14 +71,13 @@ const Playground = () => {
   ) => {
     // we will make api call
     const options = {
-      method: 'POST',
-      url: 'https://judge0-ce.p.rapidapi.com/submissions',
-      params: {base64_encoded: 'true', fields: '*'},
+      method: "POST",
+      url: "https://judge0-ce.p.rapidapi.com/submissions",
+      params: { base64_encoded: "true", fields: "*" },
       headers: {
-        'content-type': 'application/json',
-        'Content-Type': 'application/json',
-        'X-RapidAPI-Key': '6ff4e0a1fcmshabdeb997a8766a3p1f275cjsn37e4ef37ad98',
-        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+        "Content-Type": "application/json",
+        "X-RapidAPI-Key": "de1a555803msh9797095047e2545p188369jsn58f8948f2a2a",
+        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
       },
       data: JSON.stringify({
         language_id: language_id,
@@ -95,12 +94,12 @@ const Playground = () => {
   const getOutput: (token: string) => any = async (token: string) => {
     // we will make api call
     const options = {
-      method: 'GET',
-  url: 'https://judge0-ce.p.rapidapi.com/submissions/' + token,
-  params: {base64_encoded: 'true', fields: '*'},
-  headers: {
-    'X-RapidAPI-Key': '6ff4e0a1fcmshabdeb997a8766a3p1f275cjsn37e4ef37ad98',
-    'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+      method: "GET",
+      url: "https://judge0-ce.p.rapidapi.com/submissions/" + token,
+      params: { base64_encoded: "true", fields: "*" },
+      headers: {
+        "X-RapidAPI-Key": "de1a555803msh9797095047e2545p188369jsn58f8948f2a2a",
+        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
       },
     };
 
