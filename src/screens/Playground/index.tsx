@@ -1,49 +1,47 @@
-import React, { useState, useContext } from "react";
-import EditorContainer from "./EditorContainer";
-import InputConsole from "./InputConsole";
-import Navbar from "./Navbar";
-import OutputConsole from "./OutputConsole";
-import { useParams } from "react-router-dom";
-import {
-  languageMap,
-  PlaygroundContext,
-} from "../../context/PlaygroundContext";
-import styled from "styled-components";
-import { ModalContext } from "../../context/ModalContext";
-import Modal from "../../components/Modal";
-import { Buffer } from "buffer";
-import axios from "axios";
+import React from 'react'
+import { useContext, useState} from 'react'
+import EditorContainer from './EditorContainer';
+import InputConsole from './InputConsole';
+import Navbar from './Navbar';
+import OutputConsole from './OutputConsole';
+import {useParams} from 'react-router-dom'
+import { PlaygroundContext } from '../../ModalContext/PlaygroundContext';
+import CodeEditor from './CodeEditor';
+import styled from 'styled-components';
+import { ModalContext } from '../../ModalContext/ModalContext';
+import Modal from '../../Components/Modal';
+import { languageMap } from '../../ModalContext/PlaygroundContext';
+import { Buffer } from 'buffer';
+
+import axios from 'axios';
+import Loading from '../../Components/Modal Types/Loading';
+
 
 const MainApp = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  height: calc(100vh - 4.5rem);
-`;
-
+display: grid;
+grid-template-columns: 2fr 1fr;
+height: calc(100vh - 4.5rem);
+`
 const Consoles = styled.div`
-  display: grid;
+display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
-`;
+`
 
-const Playground = () => {
+const Playground = (props : any) => {
   const { folderId, playgroundId } = useParams();
-
-  // access isOpen field
   const { isOpen, openModal, closeModal } = useContext(ModalContext)!;
-
-  // access all playgrounds
   const { folders, savePlayground } = useContext(PlaygroundContext)!;
-  const { title, language, code } =
+  const { title, languages, code } =
     folders[folderId as string].items[playgroundId as string];
-
+    // For loader to work
+  const [loader, setLoader] = useState(false);
+    // Save code, language and input into the playground
   const [currentCode, setCurrentCode] = useState(code);
   const [currentInput, setCurrentInput] = useState("");
-  const [currentLanguage, setCurrentLanguage] = useState(language);
-  const [currentOutput, setCurrentOutput] = useState("");
+  const [currentLanguage, setCurrentLanguage] = useState(languages);
+  const [currentOutput, setCurrentOutput] = useState("Your Output Here : ");
 
-  // save our code
-  // we need currentCode, currentLanguage
   const saveCode = () => {
     savePlayground(
       folderId as string,
@@ -53,31 +51,25 @@ const Playground = () => {
     );
   };
 
-  // encode function => converts normal string to base64 encoded string
+
   const encode = (str: string) => {
-    // return encoded string
     return Buffer.from(str, "binary").toString("base64");
   };
 
   const decode = (str: string) => {
-    // return encoded string
     return Buffer.from(str, "base64").toString();
   };
 
-  const postSubmission = async (
-    language_id: number,
-    source_code: string,
-    stdin: string
-  ) => {
-    // we will make api call
+  const postSubmission = async (language_id: number, source_code: string, stdin: string) => {
+    console.log(language_id, source_code, stdin);
     const options = {
-      method: "POST",
-      url: "https://judge0-ce.p.rapidapi.com/submissions",
-      params: { base64_encoded: "true", fields: "*" },
+      method: 'POST',
+      url: 'https://judge0-ce.p.rapidapi.com/submissions',
+      params: {base64_encoded: 'true', fields: '*'},
       headers: {
-        "Content-Type": "application/json",
-        "X-RapidAPI-Key": "de1a555803msh9797095047e2545p188369jsn58f8948f2a2a",
-        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+        'Content-Type': 'application/json',
+        'X-RapidAPI-Key': '3b34327924msh6dbf3a3f34bdf37p1e917ajsnefb7bec1d88a',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
       },
       data: JSON.stringify({
         language_id: language_id,
@@ -86,24 +78,23 @@ const Playground = () => {
       }),
     };
 
-    // call the api
     const res = await axios.request(options);
+    // console.log(res);
     return res.data.token;
   };
 
   const getOutput: (token: string) => any = async (token: string) => {
-    // we will make api call
+
     const options = {
-      method: "GET",
-      url: "https://judge0-ce.p.rapidapi.com/submissions/" + token,
-      params: { base64_encoded: "true", fields: "*" },
+      method: 'GET',
+      url: 'https://judge0-ce.p.rapidapi.com/submissions/' + token,
+      params: {base64_encoded: 'true', fields: '*'},
       headers: {
-        "X-RapidAPI-Key": "de1a555803msh9797095047e2545p188369jsn58f8948f2a2a",
-        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-      },
+        'X-RapidAPI-Key': '3b34327924msh6dbf3a3f34bdf37p1e917ajsnefb7bec1d88a',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+      }
     };
 
-    // call the api
     const res = await axios.request(options);
     if (res.data.status_id <= 2) {
       const res2 = await getOutput(token);
@@ -112,28 +103,20 @@ const Playground = () => {
     return res.data;
   };
 
-  const runCode = async () => {
-    // set loading to true
-    // open loading modal
-    openModal({
-      value: true,
-      type: "6",
-      identifer: {
-        folderId: "",
-        cardId: "",
-      },
-    });
+ 
 
+  const runCode = async () => {
+    
+    setLoader(true);
     const language_id = languageMap[currentLanguage].id;
     const source_code = encode(currentCode);
     const stdin = encode(currentInput);
+    // console.log(language_id, source_code, stdin);
 
-    // pass these things to our api
     const token = await postSubmission(language_id, source_code, stdin);
 
-    // first part is now complete
-    // moving to the second part now
     const res = await getOutput(token);
+    console.log(res);
     const status_name = res.status.description;
     const decoded_output = decode(res.stdout ? res.stdout : "");
     const decoded_compile_output = decode(
@@ -143,7 +126,6 @@ const Playground = () => {
 
     let final_output = "";
     if (res.status_id !== 3) {
-      // our code has some error
       if (decoded_compile_output === "") {
         final_output = decoded_stderr;
       } else {
@@ -154,12 +136,13 @@ const Playground = () => {
     }
 
     setCurrentOutput(status_name + "\n\n" + final_output);
-    // set loading to false
-    closeModal();
+    setLoader(false);
   };
+
 
   return (
     <div>
+      {loader && <Loading />}
       <Navbar />
       <MainApp>
         <EditorContainer

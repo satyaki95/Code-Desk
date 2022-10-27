@@ -1,35 +1,41 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
-import { IoTrashOutline } from "react-icons/io5";
-import { BiEditAlt } from "react-icons/bi";
-import { ModalContext } from "../../context/ModalContext";
-import { PlaygroundContext } from "../../context/PlaygroundContext";
+import styled, { ThemeProvider } from "styled-components";
+import { BsTrashFill } from "react-icons/bs";
+import { AiTwotoneEdit } from "react-icons/ai";
+import { ModalContext } from "../../ModalContext/ModalContext";
+import { PlaygroundContext } from "../../ModalContext/PlaygroundContext";
 import { useNavigate } from "react-router-dom";
+import {DarkModeContext} from '../../DarkModeContext/DarkModeContext'
+import { DarkTheme, LightTheme } from "../../DarkModeContext/DarkModes";
+import DarkModeToggleButton from './DarkModeToggleButton'
+
 
 interface HeaderProps {
   readonly variant: string;
 }
-
-interface HeadingProps {
+interface headingSize {
   readonly size: string;
 }
 
+
 const StyledRightPane = styled.div`
+  width: 60%;
+  height: 100vh;
   padding: 2rem;
-  background: #fafafa;
+  background: ${(props) => props.theme.body};
   position: absolute;
   right: 0;
   top: 0;
-  width: 60%;
+  color : ${(props) => props.theme.mainHeading};
 `;
 
 const Header = styled.div<HeaderProps>`
+  height : 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  margin-bottom: ${(props) =>
-    props.variant === "main" ? "2.75rem" : "1.4rem"};
+  margin-bottom: ${(props) => (props.variant === "primary" ? "2rem" : "1rem")};
 
   &::after {
     position: absolute;
@@ -38,20 +44,20 @@ const Header = styled.div<HeaderProps>`
     width: 100%;
     height: 2px;
     background: rgba(0, 0, 0, 0.25);
-    display: ${(props) => (props.variant === "main" ? "block" : "none")};
+    display: ${(props) => (props.variant === "primary" ? "block" : "none")};
   }
 `;
-
-const Heading = styled.h3<HeadingProps>`
+const Heading = styled.h3<headingSize>`
+margin-top : 20px;
   font-weight: 400;
-  font-size: ${(props) => (props.size === "large" ? "1.8rem" : "1.5rem")};
-
+  font-size: ${(props) => (props.size === "main" ? "1.8rem" : "1.5rem")};
   span {
     font-weight: 700;
   }
 `;
 
 const AddButton = styled.button`
+margin-top : 20px;
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -60,12 +66,10 @@ const AddButton = styled.button`
   border: 0;
   font-size: 1.1rem;
   cursor: pointer;
-
+  color : ${(props) => props.theme.mainHeading};
   span {
-    font-size: 1.75rem;
     font-weight: 700;
   }
-
   transition: all 0.25s ease;
   &:hover {
     opacity: 0.75;
@@ -73,111 +77,128 @@ const AddButton = styled.button`
 `;
 
 const Folder = styled.div`
-  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   margin-bottom: 2rem;
+  
 `;
 
 const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 2rem;
-  row-gap: 2rem;
+  row-gap: 1rem;
 `;
 
 const PlaygroundCard = styled.div`
   display: flex;
   align-items: center;
   padding: 0.6rem;
-  gap: 1rem;
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.08s ease;
+  gap: 2rem;
+  background-color : 'white';
+  box-shadow: ${(props) => props.theme.shadow};
+  cursor : pointer;
+  transition : all 0.1s ease
 
-  &:hover {
-    opacity: 0.75;
+  &:hover{
+    opacity : 0.75
   }
 `;
 
-const SmallLogo = styled.img`
+const SmallImage = styled.img`
   width: 75px;
 `;
-
 const CardContent = styled.div`
   flex-grow: 1;
+  margin-left: -20px;
+  color : 'black';
 
   h5 {
     font-weight: 400;
-    font-size: 1.2rem;
-    margin-bottom: 0.25rem;
+    font-size: 1 rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
 const Icons = styled.div`
+margin-top : 20px;
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  font-size: 1.25rem;
+  font-size: 1 rem;
   padding-right: 1rem;
 `;
 
 const FolderButtons = styled.div`
   display: flex;
-  align-items: center;
+  algn-items: center;
+  justify-content: flex-end;
+  
 `;
 
 const RightPane = () => {
-  // initialize useNavigate
-  const navigate = useNavigate();
-
   const makeAvailableGlobally = useContext(ModalContext)!;
   const { openModal } = makeAvailableGlobally;
 
-  // use global folder structure
-  const PlaygroundFeatures = useContext(PlaygroundContext)!;
+  const PlaygroundFeatures = React.useContext(PlaygroundContext)!;
   const Folders = PlaygroundFeatures.folders;
-  const { deleteFolder, deleteCard } = PlaygroundFeatures;
+  const { deleteCard, deleteFolder } = PlaygroundFeatures;
+
+  const navigate = useNavigate();
+  // DarkMode Switch
+    const darkTheme = useContext(DarkModeContext)!;
+    let isDarkThemeOn = darkTheme.isDarkModeOn;
+    let SetIsDarkThemeOn = darkTheme.setIsDarkModeOn;
+
+    function changeTheme(){
+      SetIsDarkThemeOn(!isDarkThemeOn);
+      console.log("Clicked");
+    }
 
   return (
+    <ThemeProvider theme={isDarkThemeOn ? DarkTheme : LightTheme}>
+
     <StyledRightPane>
-      <Header variant='main'>
-        <Heading size='large'>
-          My <span>Playgrounds</span>
+      <Header variant="primary">
+        <Heading size="main">
+          My <span>playgrounds</span>
         </Heading>
         <AddButton
           onClick={() => {
             openModal({
               value: true,
               type: "4",
-              identifer: {
+              identifier: {
                 folderId: "",
                 cardId: "",
               },
             });
           }}
         >
-          <span>+</span> New Folder
+          {" "}
+          + New Folder
         </AddButton>
       </Header>
-
+      <DarkModeToggleButton changeTheme ={changeTheme}/>
+          
       {Object.entries(Folders).map(
-        ([folderId, folder]: [folderId: string, folder: any]) => (
-          <Folder>
-            <Header variant='folder'>
-              <Heading size='small'>{folder.title}</Heading>
+        ([folderId, folder]: [foldersId: string, folder: any]) => (
+          <Folder key={folderId}>
+            <Header variant="secondary">
+              <Heading size="secondary">{folder.title}</Heading>
               <FolderButtons>
                 <Icons>
-                  <IoTrashOutline
+                  <BsTrashFill
                     onClick={() => {
-                      // DELETE FOLDER
+                      // Delete folder
                       deleteFolder(folderId);
                     }}
                   />
-                  <BiEditAlt
+                  <AiTwotoneEdit
                     onClick={() => {
                       openModal({
                         value: true,
                         type: "2",
-                        identifer: {
+                        identifier: {
                           folderId: folderId,
                           cardId: "",
                         },
@@ -185,54 +206,53 @@ const RightPane = () => {
                     }}
                   />
                 </Icons>
-                <AddButton
-                  onClick={() => {
-                    openModal({
-                      value: true,
-                      type: "3",
-                      identifer: {
-                        folderId: folderId,
-                        cardId: "",
-                      },
-                    });
-                  }}
-                >
-                  <span>+</span> New Playground
-                </AddButton>
+              
+              <AddButton
+                onClick={() => {
+                  openModal({
+                    value: true,
+                    type: "3",
+                    identifier: {
+                      folderId: folderId,
+                      cardId: "",
+                    },
+                  });
+                }}
+              >
+                <span>+</span> New Playground
+              </AddButton>
               </FolderButtons>
             </Header>
 
             <CardContainer>
               {Object.entries(folder.items).map(
                 ([cardId, card]: [cardId: string, card: any]) => (
-                  <PlaygroundCard
-                    onClick={() => {
-                      // navigate to playground page
-                      navigate(`/code/${folderId}/${cardId}`);
-                    }}
-                  >
-                    <SmallLogo src='/logo-small.png' alt='' />
-                    <CardContent>
+                  <PlaygroundCard>
+                    <SmallImage src="./logo-small.png" alt="" />
+                    <CardContent
+                      onClick={() => {
+                        navigate(`/code/${folderId}/${cardId}`);
+                      }}
+                    >
                       <h5>{card.title}</h5>
-                      <p>Language: {card.language}</p>
+                      <p>Language : {card.languages}</p>
                     </CardContent>
                     <Icons
                       onClick={(e) => {
-                        e.stopPropagation(); // stop click propogation from child to parent
+                        e.stopPropagation();
                       }}
                     >
-                      <IoTrashOutline
+                      <BsTrashFill
                         onClick={() => {
-                          // DELETE CARD
                           deleteCard(folderId, cardId);
                         }}
                       />
-                      <BiEditAlt
+                      <AiTwotoneEdit
                         onClick={() => {
                           openModal({
                             value: true,
                             type: "1",
-                            identifer: {
+                            identifier: {
                               folderId: folderId,
                               cardId: cardId,
                             },
@@ -248,6 +268,7 @@ const RightPane = () => {
         )
       )}
     </StyledRightPane>
+    </ThemeProvider>
   );
 };
 
