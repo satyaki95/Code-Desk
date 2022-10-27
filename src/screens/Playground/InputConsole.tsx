@@ -60,10 +60,10 @@ const InputConsole: React.FC<InputConsoleProps> = ({
     <Console>
       <Header>
         Input:
-        {/* <button>
+        <button>
           <BiImport />
           Import Input
-        </button> */}
+        </button>
       </Header>
       <TextArea
         value={currentInput}

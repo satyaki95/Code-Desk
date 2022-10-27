@@ -255,10 +255,10 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
       {/* Lower Toolbar Begins */}
       <LowerToolbar>
         <ButtonGroup>
-          {/* <button>
+          <button>
             <BiFullscreen />
             Full Screen
-          </button> */}
+          </button>
           <label>
             <input
               type='file'
