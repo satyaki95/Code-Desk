@@ -1,117 +1,83 @@
 import React, { useEffect, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
-
-
+// themes
 import { duotoneLight, duotoneDark } from "@uiw/codemirror-theme-duotone";
 import { xcodeLight, xcodeDark } from "@uiw/codemirror-theme-xcode";
 import { okaidia } from "@uiw/codemirror-theme-okaidia";
 import { githubDark, githubLight } from "@uiw/codemirror-theme-github";
 import { darcula } from "@uiw/codemirror-theme-darcula";
 import { bespin } from "@uiw/codemirror-theme-bespin";
-
+// languages
 import { cpp } from "@codemirror/lang-cpp";
 import { java } from "@codemirror/lang-java";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
-
+// configuration
 import { indentUnit } from "@codemirror/language";
 import { EditorState } from "@codemirror/state";
 import styled from "styled-components";
 
+const CodeEditorContainer = styled.div`
+  height: calc(100vh - 12.5rem);
 
-
-interface CodeEditorProps {
-  currentLanguage : string;
-  currentTheme : string;
-  currentCode : string;
-  setCurrentCode: (newCode: string) => void;
-  fullScreen : boolean;
-}
-interface HeaderProps {
-  readonly fullScreen: boolean;
-}
-
-const CodeEditorContainer = styled.div<HeaderProps>`
-  width : ${(props) => (props.fullScreen ? "100vw" : "auto")};
-  height: ${(props) => (props.fullScreen ? "70vh" : "calc(100vh - 12.5rem)")};
   & > div {
     height: 100%;
   }
 `;
 
-const CodeEditor : React.FC<CodeEditorProps> = ({currentLanguage, currentTheme, currentCode, setCurrentCode, fullScreen}) => {
-  const [theme, setTheme] = useState<any>(duotoneDark);
-  const [lang, setLang] = useState<any>(java);
+interface CodeEditorProps {
+  currentLanguage: string;
+  currentTheme: string;
+  currentCode: string;
+  setCurrentCode: (newCode: string) => void;
+}
 
-  // Handle Language change Function
+const CodeEditor: React.FC<CodeEditorProps> = ({
+  currentLanguage,
+  currentTheme,
+  currentCode,
+  setCurrentCode,
+}) => {
+  // code editor configuration
+  const [theme, setTheme] = useState<any>(githubDark);
+  const [lang, setLang] = useState<any>(python);
 
+  // HANDLE LANGUAGE CHANGE
   useEffect(() => {
-    switch(currentLanguage) {
-      case 'c++':
-        setLang(cpp);
-        break;
-      case 'python':
-        setLang(python);
-        break;
-      case 'java':
-        setLang(java);
-        break;
-      case 'javascipt':
-        setLang(javascript);
-        break;
-    };
+    if (currentLanguage === "c++") setLang(cpp);
+    if (currentLanguage === "python") setLang(python);
+    if (currentLanguage === "java") setLang(java);
+    if (currentLanguage === "javascript") setLang(javascript);
   }, [currentLanguage]);
 
-  // handle Theme change
-
+  // HANDLE THEME CHANGE
   useEffect(() => {
-    switch(currentTheme) {
-      case 'duotoneLight':
-        setTheme(duotoneLight);
-        break;
-      case 'duotoneDark':
-        setTheme(duotoneDark);
-        break;
-      case 'xcodeLight':
-        setTheme(xcodeLight);
-        break;
-      case 'xcodeDark':
-        setTheme(xcodeDark);
-        break;
-      case 'okaidia':
-        setTheme(okaidia);
-          break;
-      case 'githubLight':
-        setTheme(githubLight);
-          break;
-      case 'githubDark':
-        setTheme(githubDark);
-          break;
-      case 'darcula':
-          setTheme(darcula);
-          break;
-      case 'bespin':
-          setTheme(bespin);
-          break;
-    };
+    if (currentTheme === "duotoneLight") setTheme(duotoneLight);
+    if (currentTheme === "duotoneDark") setTheme(duotoneDark);
+    if (currentTheme === "xcodeLight") setTheme(xcodeLight);
+    if (currentTheme === "xcodeDark") setTheme(xcodeDark);
+    if (currentTheme === "okaidia") setTheme(okaidia);
+    if (currentTheme === "githubLight") setTheme(githubLight);
+    if (currentTheme === "githubDark") setTheme(githubDark);
+    if (currentTheme === "darcula") setTheme(darcula);
+    if (currentTheme === "bespin") setTheme(bespin);
   }, [currentTheme]);
 
-
   return (
-    <CodeEditorContainer fullScreen={fullScreen}>
+    <CodeEditorContainer>
       <CodeMirror
-         theme={theme}
-         value={currentCode}
-         onChange={(value: string) => {
-           setCurrentCode(value);
-         }}
-         height='100%'
-         extensions={[
-           lang,
-           indentUnit.of("        "),
-           EditorState.tabSize.of(8),
-           EditorState.changeFilter.of(() => true),
-         ]}
+        theme={theme}
+        value={currentCode}
+        onChange={(value: string) => {
+          setCurrentCode(value);
+        }}
+        height='100%'
+        extensions={[
+          lang,
+          indentUnit.of("        "),
+          EditorState.tabSize.of(8),
+          EditorState.changeFilter.of(() => true),
+        ]}
         basicSetup={{
           lineNumbers: true,
           highlightActiveLineGutter: true,

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { RiCloseFill } from "react-icons/ri";
-import { PlaygroundContext } from "../../ModalContext/PlaygroundContext";
-import { CloseButton, Header, Input, Modalprops } from "../Modal";
+import { PlaygroundContext } from "../../context/PlaygroundContext";
+import { CloseButton, Header, Input, ModalProps } from "../Modal";
 import Select from "react-select";
 import styled from "styled-components";
 
@@ -12,10 +12,12 @@ const InputWithSelect = styled.div`
   column-gap: 1rem;
   margin-top: 1.2rem;
   align-items: center;
+
   input {
     flex-grow: 1;
     height: 2rem;
   }
+
   button {
     background: #241f21;
     height: 2rem;
@@ -24,8 +26,8 @@ const InputWithSelect = styled.div`
   }
 `;
 
-const NewCard = ({ closeModal, identifier }: Modalprops) => {
-  const { folderId } = identifier;
+const NewCard = ({ closeModal, identifer }: ModalProps) => {
+  const { folderId } = identifer;
 
   // access our card from folders state
   const { folders, createNewPlayground } = useContext(PlaygroundContext)!;

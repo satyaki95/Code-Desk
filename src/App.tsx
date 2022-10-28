@@ -1,30 +1,40 @@
 import React from "react";
-import GlobalStyle from "./Styles/Global";
-import HomeScreen from "./Screens/HomeScreen";
-import ModalProvider from "./ModalContext/ModalContext";
-import MyPlayground from "./Screens/PlayGround/index";
-import PlaygroundProvider from "./ModalContext/PlaygroundContext";
-import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
-import Page404 from "./Screens/Page404";
+import ModalProvider from "./context/ModalContext";
+import PlaygroundProvider from "./context/PlaygroundContext";
+import HomeScreen from "./screens/HomeScreen";
+import Playground from "./screens/Playground";
+import GlobalStyles from "./styles/global";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Page404 from "./screens/Page404";
 
+export const lightTheme = {
+  background: 'white',
+  text: 'black',
+}
+ 
+export const darkTheme = {
+  background: 'black',
+  text: 'white',
+}
 
 function App() {
-
-  
-
+   
   return (
-    
     <PlaygroundProvider>
       <ModalProvider>
-        <GlobalStyle />
+      
+        <GlobalStyles />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomeScreen />} />
+            <Route path='/' element={<HomeScreen />} />
+
             <Route
-              path="/code/:folderId/:playgroundId"
-              element={<MyPlayground />}
+              path='/code/:folderId/:playgroundId'
+              element={<Playground />}
             />
-            <Route path="*" element={<Page404 />} />
+
+            {/* For undefined paths - 404 page */}
+            <Route path='*' element={<Page404 />} />
           </Routes>
         </BrowserRouter>
       </ModalProvider>

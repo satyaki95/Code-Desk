@@ -1,125 +1,108 @@
-import React, { useState } from "react";
-import styled  from "styled-components";
+import React, { useState, useContext } from "react";
+import { BiEditAlt, BiExport, BiFullscreen, BiImport } from "react-icons/bi";
+import styled from "styled-components";
 import CodeEditor from "./CodeEditor";
-import { MdFullscreen } from "react-icons/md";
-import { CgImport } from "react-icons/cg";
-import { CgExport } from "react-icons/cg";
-import { AiTwotoneEdit } from "react-icons/ai";
 import Select from "react-select";
-import { Console } from "console";
-import { ModalContext } from "../../ModalContext/ModalContext";
-import { languageMap } from "../../ModalContext/PlaygroundContext";
-
-import {DarkModeContext} from '../../DarkModeContext/DarkModeContext'
-import { ThemeProvider } from "styled-components";
-import  {DarkTheme, LightTheme} from '../../DarkModeContext/DarkModes'
+import { ModalContext } from "../../context/ModalContext";
+import { languageMap } from "../../context/PlaygroundContext";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 const StyledEditorContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const UpperToolbar = styled.div`
-  background: ${(props => props.theme.body)};
-  color: ${(props => props.theme.mainHeading)};
+  background: white;
   height: 4rem;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.2rem;
+  padding: 0 2rem;
 `;
 
 const Title = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  margin-left : 20px;
+  gap: 1rem;
 
   h3 {
     font-size: 1.3rem;
   }
 
   button {
-    color: ${(props => props.theme.mainHeading)};
     background: transparent;
     font-size: 1.3rem;
-    margin-top : 6px;
     border: 0;
     outline: 0;
   }
 `;
 
 const LowerToolbar = styled.div`
-background: ${(props => props.theme.body)};
-color: ${(props => props.theme.mainHeading)};
+  background: white;
   height: 4rem;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.3rem;
+  padding: 0 2rem;
 
-  button, label {
-    color: ${(props => props.theme.mainHeading)};
+  button,
+  label {
     background: transparent;
     outline: 0;
     border: 0;
-    font-size: 1.1 rem;
+    font-size: 1.15rem;
+    cursor: pointer;
+
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    cursor: pointer;
+
     svg {
       font-size: 1.4rem;
     }
   }
 `;
+
 const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 2.5rem;
-  margin-left : 25px;
 `;
 
-const RunCodeButton = styled.div`
+const RunCode = styled.button`
   padding: 0.8rem 2rem;
   background-color: #0097d7 !important;
   color: white;
   font-weight: 700;
-  border-weight: 0.5rem;
-  margin-right: 1rem;
-  cursor: pointer;
+  border-radius: 2rem;
 `;
-const SaveCodeButton = styled.button`
-  padding: 0.5rem 0.8rem;
-  text-align : center;
-  font-size : 1rem;
-  background: ${(props => props.theme.body)};
-    color: ${(props => props.theme.mainHeading)};
-  font-weight: 700;
-  border: 1px solid green;
-  margin-right: 0.5rem auto;
-  cursor: pointer;
-  transition: 0.5s ease;
 
-  &: hover {
-    color: white;
-    background-color: green !important;
-    border: 1px solid green;
-  }
+const SaveCode = styled.button`
+  padding: 0.4rem 1rem;
+  background-color: #0097d7 !important;
+  color: white;
+  font-weight: 700;
+  border-radius: 2rem;
+  border: 0;
 `;
+
 const SelectBars = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-right : 25px;
+
   & > div:nth-of-type(1) {
-    width: 8rem;
-    color: black !important;
-  }
-  & > div:nth-of-type(2) {
     width: 10rem;
-    color: black !important;
+  }
+
+  & > div:nth-of-type(2) {
+    width: 11rem;
   }
 `;
+
 interface EditorContainerProps {
   title: string;
   currentLanguage: string;
@@ -143,16 +126,17 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
   saveCode,
   runCode,
 }) => {
-  const { openModal } = React.useContext(ModalContext)!;
+  // import openModal function
+  const { openModal } = useContext(ModalContext)!;
 
-  const LanguageOptions = [
+  const languageOptions = [
     { value: "c++", label: "C++" },
     { value: "java", label: "Java" },
     { value: "python", label: "Python" },
-    { value: "javascript", label: "Javascript" },
+    { value: "javascript", label: "JavaScript" },
   ];
 
-  const ThemeOptions = [
+  const themeOptions = [
     { value: "duotoneLight", label: "duotoneLight" },
     { value: "duotoneDark", label: "duotoneDark" },
     { value: "xcodeLight", label: "xcodeLight" },
@@ -160,39 +144,44 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
     { value: "okaidia", label: "okaidia" },
     { value: "githubDark", label: "githubDark" },
     { value: "githubLight", label: "githubLight" },
-    { value: "darcula", label: "darcula" },
     { value: "bespin", label: "bespin" },
   ];
 
-  const [selectedLang, setSelectedLang] = useState(() => {
-    for (let i = 0; i < LanguageOptions.length; i++) {
-      if (
-        LanguageOptions[i].value.toLowerCase() == currentLanguage.toLowerCase()
-      )
-        return LanguageOptions[i];
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    for (let i = 0; i < languageOptions.length; i++) {
+      if (languageOptions[i].value === currentLanguage)
+        return languageOptions[i];
     }
-    return LanguageOptions[0];
+    return languageOptions[0];
   });
+
   const [selectedTheme, setSelectedTheme] = useState({
     value: "githubDark",
     label: "githubDark",
   });
 
-  function handleLanguageChange(selectedOption: any) {
-    setSelectedLang(selectedOption);
+  const handleChangeLanguage = (selectedOption: any) => {
+    setSelectedLanguage(selectedOption);
     setCurrentLanguage(selectedOption.value);
     setCurrentCode(languageMap[selectedOption.value].defaultCode);
-  }
-  function handleThemeChange(selectedOption: any) {
+  };
+
+  const handleChangeTheme = (selectedOption: any) => {
     setSelectedTheme(selectedOption);
-  }
+  };
 
   const getFile = (e: any) => {
     const input = e.target;
+
+    // input = {
+    //   files: ["file1.txt", "file2.txt", ...]
+    // }
+
     if ("files" in input && input.files.length > 0) {
       placeFileContent(input.files[0]);
     }
   };
+
   const placeFileContent = (file: any) => {
     readFileContent(file)
       .then((content) => {
@@ -209,81 +198,71 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
       reader.readAsText(file);
     });
   }
-  // Full Screen for code editor
-  const [fullScreen, setFullScreen] = useState(false);
-
-  function handleFullScreen(){
-    setFullScreen(!fullScreen);
-  }
-
-  // DarkTheme Functionality
-
-  const darkTheme = React.useContext(DarkModeContext)!;
-
-  let isDarkThemeOn = darkTheme.isDarkModeOn;
-  let SetIsDarkThemeOn = darkTheme.setIsDarkModeOn;
-
-  function changeTheme(){
-    SetIsDarkThemeOn(!isDarkThemeOn);
-    console.log("Clicked");
-  }
-  console.log(isDarkThemeOn);
-  
+// Full screen
+const handle = useFullScreenHandle();
 
   return (
-    <ThemeProvider theme={isDarkThemeOn ? DarkTheme : LightTheme}>
-
-
+    
     <StyledEditorContainer>
+      {/* Upper Toolbar Begins */}
       <UpperToolbar>
         <Title>
           <h3>{title}</h3>
           <button
             onClick={() => {
+              // open a modal
+              // to edit card title
               openModal({
                 value: true,
                 type: "1",
-                identifier: {
+                identifer: {
                   folderId: folderId,
                   cardId: cardId,
                 },
               });
             }}
           >
-            <AiTwotoneEdit />
+            <BiEditAlt />
           </button>
         </Title>
         <SelectBars>
-          <SaveCodeButton
-          onClick={() => {
-            saveCode();
-          }}
-          >Save Code</SaveCodeButton>
+          <SaveCode
+            onClick={() => {
+              saveCode();
+            }}
+          >
+            Save Code
+          </SaveCode>
           <Select
-            value={selectedLang}
-            onChange={handleLanguageChange}
-            options={LanguageOptions}
+            value={selectedLanguage}
+            options={languageOptions}
+            onChange={handleChangeLanguage}
           />
           <Select
             value={selectedTheme}
-            onChange={handleThemeChange}
-            options={ThemeOptions}
+            options={themeOptions}
+            onChange={handleChangeTheme}
           />
         </SelectBars>
       </UpperToolbar>
+      {/* Upper Toolbar Ends */}
 
+      {/* Code Editor Begins */}
+      <FullScreen handle={handle}>
       <CodeEditor
-        currentLanguage={selectedLang.value}
+        currentLanguage={selectedLanguage.value}
         currentTheme={selectedTheme.value}
         currentCode={currentCode}
         setCurrentCode={setCurrentCode}
-        fullScreen = {fullScreen}
       />
+      </FullScreen>
+      {/* Code Editor Ends */}
 
+      {/* Lower Toolbar Begins */}
       <LowerToolbar>
         <ButtonGroup>
-          <button>
-            <MdFullscreen onClick={() =>handleFullScreen()}/>
+          <button onClick={handle.enter}>
+            <BiFullscreen />
             Full Screen
           </button>
           <label>
@@ -293,21 +272,25 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
               style={{ display: "none" }}
               onChange={(e) => {
                 getFile(e);
-              }}/><CgImport /> Import Code
+              }}
+            />
+            <BiImport /> Import Code
           </label>
-          <button>
-            <CgExport />
-            Export Icon
-          </button>
+          {/* <button>
+            <BiExport />
+            Export Code
+          </button> */}
         </ButtonGroup>
-        <RunCodeButton  
+        <RunCode
           onClick={() => {
             runCode();
           }}
-          >Run Code</RunCodeButton>
+        >
+          Run Code
+        </RunCode>
       </LowerToolbar>
+      {/* Lower Toolbar Ends */}
     </StyledEditorContainer>
-    </ThemeProvider>
   );
 };
 

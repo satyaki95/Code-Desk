@@ -1,54 +1,51 @@
 import React from "react";
 import styled from "styled-components";
-import { CgExport } from "react-icons/cg";
-
-import {DarkModeContext} from '../../DarkModeContext/DarkModeContext'
-import { ThemeProvider } from "styled-components";
-import  {DarkTheme, LightTheme} from '../../DarkModeContext/DarkModes'
+import { BiExport } from "react-icons/bi";
 
 const Console = styled.div`
-background-color: ${(props => props.theme.body)} !important;
-  color: ${(props => props.theme.mainHeading)};
+  background: white;
   display: flex;
   flex-direction: column;
   position: relative;
 `;
 
 const Header = styled.div`
-height: 4rem;
-background-color: ${(props => props.theme.body)} !important;
-  color: ${(props => props.theme.mainHeading)};
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
-z-index: 2;
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 0 1rem;
-font-size: 1.25rem;
-font-weight: 700;
-
-button {
+  height: 4rem;
+  background: #ededed;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+  z-index: 2;
   display: flex;
   align-items: center;
-  color: ${(props => props.theme.mainHeading)};
-  gap: 0.5rem;
-  font-size: 1rem;
-  font-weight: 400;
-  background : transparent;
-  outline:0;
-  border : 0;
+  justify-content: space-between;
+  padding: 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
 
-  svg {
-    font-size: 1.5rem;
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1rem;
+    font-weight: 400;
+    background: transparent;
+    outline: 0;
+    border: 0;
+
+    svg {
+      font-size: 1.5rem;
+    }
   }
-}
 `;
+
 const OutputArea = styled.textarea`
-background-color: ${(props => props.theme.body)} !important;
-color: ${(props => props.theme.mainHeading)};
+  background: #e7e7e7;
   flex-grow: 1;
   padding: 0.25rem;
-  padding-top : 0.5rem
+  padding-top: 0.5rem;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text);
+  background-color: var(--background);
 `;
 
 interface OutputConsoleProps {
@@ -56,27 +53,18 @@ interface OutputConsoleProps {
 }
 
 const OutputConsole: React.FC<OutputConsoleProps> = ({ currentOutput }) => {
-
-   // DarkMode Theme
-
-   const darkTheme = React.useContext(DarkModeContext)!;
-
-   let isDarkThemeOn = darkTheme.isDarkModeOn;
-   let SetIsDarkThemeOn = darkTheme.setIsDarkModeOn;
   return (
-    <ThemeProvider theme={isDarkThemeOn ? DarkTheme : LightTheme}>
     <Console>
       <Header>
-        Output Console:
-        <button>
-          <CgExport />
-          Export output
-        </button>
+        Output:
+        {/* <button>
+          <BiExport />
+          Export Output
+        </button> */}
       </Header>
       <OutputArea value={currentOutput} disabled></OutputArea>
     </Console>
-    </ThemeProvider>
   );
-}
+};
 
 export default OutputConsole;
