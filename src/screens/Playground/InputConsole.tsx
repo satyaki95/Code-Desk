@@ -7,7 +7,6 @@ const Console = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  
 `;
 
 const Header = styled.div`
@@ -46,9 +45,6 @@ const TextArea = styled.textarea`
   font-size: 1.1rem;
   padding: 0.25rem;
   padding-top: 0.5rem;
-  color: var(--text);
-  background-color: var(--background);
-
 `;
 
 interface InputConsoleProps {

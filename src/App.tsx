@@ -7,22 +7,10 @@ import GlobalStyles from "./styles/global";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Page404 from "./screens/Page404";
 
-export const lightTheme = {
-  background: 'white',
-  text: 'black',
-}
- 
-export const darkTheme = {
-  background: 'black',
-  text: 'white',
-}
-
 function App() {
-   
   return (
     <PlaygroundProvider>
       <ModalProvider>
-      
         <GlobalStyles />
         <BrowserRouter>
           <Routes>

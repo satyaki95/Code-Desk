@@ -1,8 +1,6 @@
 import React from "react";
-import DarkTheme from "react-dark-theme";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { darkTheme, lightTheme } from "../../App";
 
 const NavbarContainer = styled.div`
   height: 4.5rem;
@@ -19,7 +17,6 @@ const NavbarContent = styled.button`
   background: transparent;
   border: 0;
   outline: 0;
-  margin:right;
 `;
 
 const Logo = styled.img`
@@ -50,9 +47,7 @@ const Navbar = () => {
         <MainHeading>
           <span>Code</span> Deck
         </MainHeading>
-        
       </NavbarContent>
-      <DarkTheme light={lightTheme} dark={darkTheme} />
     </NavbarContainer>
   );
 };

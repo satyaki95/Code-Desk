@@ -8,7 +8,6 @@ export default createGlobalStyle`
         box-sizing: border-box;
         font-family: 'Play', sans-serif;
     }
-  
 
     a, button, svg {
         cursor: pointer !important;
@@ -17,8 +16,5 @@ export default createGlobalStyle`
 
     a:hover, button:hover, svg:hover {
         opacity: 0.8;
-    }
-    body{
-        background-color: var(--background);
     }
 `;

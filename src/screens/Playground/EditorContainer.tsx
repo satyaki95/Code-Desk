@@ -5,7 +5,6 @@ import CodeEditor from "./CodeEditor";
 import Select from "react-select";
 import { ModalContext } from "../../context/ModalContext";
 import { languageMap } from "../../context/PlaygroundContext";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 const StyledEditorContainer = styled.div`
   display: flex;
@@ -198,11 +197,8 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
       reader.readAsText(file);
     });
   }
-// Full screen
-const handle = useFullScreenHandle();
 
   return (
-    
     <StyledEditorContainer>
       {/* Upper Toolbar Begins */}
       <UpperToolbar>
@@ -248,20 +244,18 @@ const handle = useFullScreenHandle();
       {/* Upper Toolbar Ends */}
 
       {/* Code Editor Begins */}
-      <FullScreen handle={handle}>
       <CodeEditor
         currentLanguage={selectedLanguage.value}
         currentTheme={selectedTheme.value}
         currentCode={currentCode}
         setCurrentCode={setCurrentCode}
       />
-      </FullScreen>
       {/* Code Editor Ends */}
 
       {/* Lower Toolbar Begins */}
       <LowerToolbar>
         <ButtonGroup>
-          <button onClick={handle.enter}>
+          <button>
             <BiFullscreen />
             Full Screen
           </button>

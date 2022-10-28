@@ -44,8 +44,6 @@ const OutputArea = styled.textarea`
   padding-top: 0.5rem;
   font-size: 1.1rem;
   font-style: italic;
-  color: var(--text);
-  background-color: var(--background);
 `;
 
 interface OutputConsoleProps {

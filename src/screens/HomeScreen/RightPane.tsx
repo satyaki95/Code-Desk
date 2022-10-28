@@ -5,8 +5,6 @@ import { BiEditAlt } from "react-icons/bi";
 import { ModalContext } from "../../context/ModalContext";
 import { PlaygroundContext } from "../../context/PlaygroundContext";
 import { useNavigate } from "react-router-dom";
-import DarkTheme from 'react-dark-theme';
-import { darkTheme, lightTheme } from "../../App";
 
 interface HeaderProps {
   readonly variant: string;
@@ -18,8 +16,7 @@ interface HeadingProps {
 
 const StyledRightPane = styled.div`
   padding: 2rem;
-  background: var(--background);
-  color: var(--text);
+  background: #fafafa;
   position: absolute;
   right: 0;
   top: 0;
@@ -63,8 +60,6 @@ const AddButton = styled.button`
   border: 0;
   font-size: 1.1rem;
   cursor: pointer;
-  color: var(--text);
-
 
   span {
     font-size: 1.75rem;
@@ -131,7 +126,6 @@ const FolderButtons = styled.div`
 `;
 
 const RightPane = () => {
-
   // initialize useNavigate
   const navigate = useNavigate();
 
@@ -142,15 +136,10 @@ const RightPane = () => {
   const PlaygroundFeatures = useContext(PlaygroundContext)!;
   const Folders = PlaygroundFeatures.folders;
   const { deleteFolder, deleteCard } = PlaygroundFeatures;
-  
-  
 
   return (
     <StyledRightPane>
-      
       <Header variant='main'>
-      <DarkTheme light={lightTheme} dark={darkTheme} />
-      
         <Heading size='large'>
           My <span>Playgrounds</span>
         </Heading>
@@ -261,6 +250,5 @@ const RightPane = () => {
     </StyledRightPane>
   );
 };
-
 
 export default RightPane;
