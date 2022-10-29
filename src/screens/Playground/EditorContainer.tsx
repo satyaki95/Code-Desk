@@ -14,6 +14,8 @@ import {DarkModeContext} from '../../DarkModeContext/DarkModeContext'
 import { ThemeProvider } from "styled-components";
 import  {DarkTheme, LightTheme} from '../../DarkModeContext/DarkModes'
 
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
 const StyledEditorContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -209,13 +211,6 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
       reader.readAsText(file);
     });
   }
-  // Full Screen for code editor
-  const [fullScreen, setFullScreen] = useState(false);
-
-  function handleFullScreen(){
-    setFullScreen(!fullScreen);
-  }
-
   // DarkTheme Functionality
 
   const darkTheme = React.useContext(DarkModeContext)!;
@@ -225,15 +220,27 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
 
   function changeTheme(){
     SetIsDarkThemeOn(!isDarkThemeOn);
-    console.log("Clicked");
   }
-  console.log(isDarkThemeOn);
-  
+
+  //Export Code Function
+
+  const handleExport = () =>{
+    const blob = new Blob([currentCode], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.download = "New-Document.txt";
+    link.href = url;
+    link.click();
+
+  }
+
+    // FullScreen Function
+
+    const handle = useFullScreenHandle();
 
   return (
     <ThemeProvider theme={isDarkThemeOn ? DarkTheme : LightTheme}>
-
-
     <StyledEditorContainer>
       <UpperToolbar>
         <Title>
@@ -271,19 +278,17 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
           />
         </SelectBars>
       </UpperToolbar>
-
       <CodeEditor
         currentLanguage={selectedLang.value}
         currentTheme={selectedTheme.value}
         currentCode={currentCode}
         setCurrentCode={setCurrentCode}
-        fullScreen = {fullScreen}
+        handle = {handle}
       />
-
       <LowerToolbar>
         <ButtonGroup>
-          <button onClick={() =>handleFullScreen()}>
-            <MdFullscreen />
+          <button onClick={handle.enter}>
+            <MdFullscreen/>
             Full Screen
           </button>
           <label>
@@ -295,10 +300,10 @@ const EditorContainer: React.FC<EditorContainerProps> = ({
                 getFile(e);
               }}/><CgImport /> Import Code
           </label>
-          {/* <button>
+          <button onClick={handleExport}>
             <CgExport />
             Export Icon
-          </button> */}
+          </button>
         </ButtonGroup>
         <RunCodeButton  
           onClick={() => {

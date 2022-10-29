@@ -10,10 +10,7 @@ import Page404 from "./Screens/Page404";
 
 function App() {
 
-  
-
   return (
-    
     <PlaygroundProvider>
       <ModalProvider>
         <GlobalStyle />

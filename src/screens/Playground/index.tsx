@@ -19,15 +19,15 @@ import Loading from '../../Components/Modal Types/Loading';
 
 const MainApp = styled.div`
 display: grid;
+
 grid-template-columns: 2fr 1fr;
 height: calc(100vh - 4.5rem);
 `
 const Consoles = styled.div`
-display: grid;
+  display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
 `
-
 const Playground = (props : any) => {
   const { folderId, playgroundId } = useParams();
   const { isOpen, openModal, closeModal } = useContext(ModalContext)!;
@@ -138,8 +138,6 @@ const Playground = (props : any) => {
     setCurrentOutput(status_name + "\n\n" + final_output);
     setLoader(false);
   };
-
-
   return (
     <div>
       {loader && <Loading />}
@@ -160,8 +158,9 @@ const Playground = (props : any) => {
           <InputConsole
             currentInput={currentInput}
             setCurrentInput={setCurrentInput}
+            
           />
-          <OutputConsole currentOutput={currentOutput} />
+          <OutputConsole currentOutput={currentOutput}  />
         </Consoles>
       </MainApp>
       {isOpen.value === true ? <Modal /> : <></>}

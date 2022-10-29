@@ -63,15 +63,29 @@ const OutputConsole: React.FC<OutputConsoleProps> = ({ currentOutput }) => {
 
    let isDarkThemeOn = darkTheme.isDarkModeOn;
    let SetIsDarkThemeOn = darkTheme.setIsDarkModeOn;
+
+
+     //Export Code Function
+
+  const handleExport = () =>{
+    const blob = new Blob([currentOutput], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.download = "New-Document.txt";
+    link.href = url;
+    link.click();
+
+  }
   return (
     <ThemeProvider theme={isDarkThemeOn ? DarkTheme : LightTheme}>
     <Console>
       <Header>
         Output Console:
-        {/* <button>
+        <button onClick={handleExport}>
           <CgExport />
           Export output
-        </button> */}
+        </button>
       </Header>
       <OutputArea value={currentOutput} disabled></OutputArea>
     </Console>

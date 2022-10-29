@@ -17,29 +17,35 @@ import { python } from "@codemirror/lang-python";
 import { indentUnit } from "@codemirror/language";
 import { EditorState } from "@codemirror/state";
 import styled from "styled-components";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-
-
+interface FullScreenHandle {
+  active: boolean;
+  enter: () => Promise<void>;
+  exit: () => Promise<void>;
+  node: React.MutableRefObject<HTMLDivElement | null>;
+}
 interface CodeEditorProps {
   currentLanguage : string;
   currentTheme : string;
   currentCode : string;
   setCurrentCode: (newCode: string) => void;
-  fullScreen : boolean;
+  handle : FullScreenHandle;
 }
-interface HeaderProps {
-  readonly fullScreen: boolean;
+interface EditorProps{
+  isActive : boolean;
 }
 
-const CodeEditorContainer = styled.div<HeaderProps>`
-  width : ${(props) => (props.fullScreen ? "100vw" : "auto")};
-  height: ${(props) => (props.fullScreen ? "70vh" : "calc(100vh - 12.5rem)")};
+let fullScreen = '100%';
+
+const CodeEditorContainer = styled.div<EditorProps> `
+  height: calc(100vh - 12.5rem);
   & > div {
     height: 100%;
   }
 `;
 
-const CodeEditor : React.FC<CodeEditorProps> = ({currentLanguage, currentTheme, currentCode, setCurrentCode, fullScreen}) => {
+const CodeEditor : React.FC<CodeEditorProps> = ({currentLanguage, currentTheme, currentCode, setCurrentCode, handle}) => {
   const [theme, setTheme] = useState<any>(duotoneDark);
   const [lang, setLang] = useState<any>(java);
 
@@ -96,16 +102,24 @@ const CodeEditor : React.FC<CodeEditorProps> = ({currentLanguage, currentTheme, 
     };
   }, [currentTheme]);
 
+  let isActive = handle.active;
+  if(handle.active){
+    fullScreen = '100vh';
+  }else{
+    fullScreen = '100%'
+  }
 
   return (
-    <CodeEditorContainer fullScreen={fullScreen}>
+    <FullScreen handle = {handle} >
+
+    <CodeEditorContainer isActive>
       <CodeMirror
          theme={theme}
          value={currentCode}
          onChange={(value: string) => {
            setCurrentCode(value);
          }}
-         height='100%'
+         height={fullScreen}
          extensions={[
            lang,
            indentUnit.of("        "),
@@ -139,6 +153,7 @@ const CodeEditor : React.FC<CodeEditorProps> = ({currentLanguage, currentTheme, 
         }}
       />
     </CodeEditorContainer>
+    </FullScreen>
   );
 };
 

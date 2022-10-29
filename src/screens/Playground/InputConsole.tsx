@@ -41,6 +41,14 @@ const Header = styled.div`
     svg {
       font-size: 1.5rem;
     }
+    label{
+      span{
+        position : relative;
+        top : -4px;
+        right : -3px;
+      }
+    }
+    
   }
 `;
 
@@ -73,16 +81,50 @@ const InputConsole: React.FC<InputConsoleProps> = ({
   let isDarkThemeOn = darkTheme.isDarkModeOn;
   let SetIsDarkThemeOn = darkTheme.setIsDarkModeOn;
 
+  //inport code
+
+  const getFile = (e: any) => {
+    const input = e.target;
+    if ("files" in input && input.files.length > 0) {
+      placeFileContent(input.files[0]);
+    }
+  };
+  const placeFileContent = (file: any) => {
+    readFileContent(file)
+      .then((content) => {
+        setCurrentInput(content as string);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function readFileContent(file: any) {
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onload = (event) => resolve(event!.target!.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsText(file);
+    });
+  }
+
   return (
     <ThemeProvider theme={isDarkThemeOn ? DarkTheme : LightTheme}>
 
     <Console>
       <Header>
         Input Console:
-        {/* <button>
-          <CgImport />
-          Import output
-        </button> */}
+        <button>
+        <label>
+            <input
+              type='file'
+              accept='.txt'
+              style={{ display: "none" }}
+              onChange={(e) => {
+                getFile(e);
+              }}/>
+              <CgImport />
+              <span>Import Code</span> 
+          </label>
+        </button>
       </Header>
       <TextArea
       value={currentInput}
