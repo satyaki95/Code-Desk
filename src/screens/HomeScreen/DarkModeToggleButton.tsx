@@ -58,9 +58,9 @@ function DarkModeToggleButton <DarModeButtonProps>({changeTheme} : {changeTheme 
     }
   return (
         <ButtonContainer>
-        <h5 style={{"marginRight" : "10px", color : 'white'}}>Light</h5>
+        <h5 style={{"marginRight" : "10px", color : 'Gray'}}>Light</h5>
         <ToggleButton type="checkbox" className="toggle-button" onChange={handleChange} checked = {isDarkThemeOn}/>
-        <h5 style={{marginLeft : "10px", color : 'white'}}>Dark</h5>
+        <h5 style={{marginLeft : "10px", color : 'Gray'}}>Dark</h5>
     </ButtonContainer>
     
   )
