@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { RiCloseFill } from "react-icons/ri";
-import { PlaygroundContext } from "../../context/PlaygroundContext";
-import { CloseButton, Header, Input, ModalProps } from "../Modal";
+import { PlaygroundContext } from "../../ModalContext/PlaygroundContext";
+import { CloseButton, Header, Input, Modalprops } from "../Modal";
 import Select from "react-select";
 import styled from "styled-components";
 
@@ -12,12 +12,10 @@ const InputWithSelect = styled.div`
   column-gap: 1rem;
   margin-top: 1.2rem;
   align-items: center;
-
   input {
     flex-grow: 1;
     height: 2rem;
   }
-
   button {
     background: #241f21;
     height: 2rem;
@@ -26,8 +24,8 @@ const InputWithSelect = styled.div`
   }
 `;
 
-const NewFolderAndPlayground = ({ closeModal, identifer }: ModalProps) => {
-  // access our card from folders state
+const NewFolderAndPlayground = ({ closeModal, identifier }: Modalprops) => {
+
   const { createNewFolderAndPlayground } = useContext(PlaygroundContext)!;
 
   const languageOptions = [
@@ -48,7 +46,7 @@ const NewFolderAndPlayground = ({ closeModal, identifer }: ModalProps) => {
   return (
     <div>
       <Header>
-        <h2>Create New Folder and Playground</h2>
+        <h2>Create New Playground</h2>
         <CloseButton
           onClick={() => {
             closeModal();
@@ -58,7 +56,7 @@ const NewFolderAndPlayground = ({ closeModal, identifer }: ModalProps) => {
         </CloseButton>
       </Header>
       <InputWithSelect>
-        <label>Enter Folder Name</label>
+      <label>Enter Folder Name</label>
         <input
           type='text'
           value={folderTitle}
@@ -66,7 +64,6 @@ const NewFolderAndPlayground = ({ closeModal, identifer }: ModalProps) => {
             setFolderTitle(e.target.value);
           }}
         />
-
         <label>Enter Card Name</label>
         <input
           type='text'
@@ -75,20 +72,14 @@ const NewFolderAndPlayground = ({ closeModal, identifer }: ModalProps) => {
             setCardTitle(e.target.value);
           }}
         />
-
         <Select
           options={languageOptions}
           value={language}
           onChange={handleLanguageChange}
         />
-
         <button
           onClick={() => {
-            createNewFolderAndPlayground(
-              folderTitle,
-              cardTitle,
-              language.value
-            );
+            createNewFolderAndPlayground(folderTitle, cardTitle, language.value);
             closeModal();
           }}
         >
@@ -99,4 +90,4 @@ const NewFolderAndPlayground = ({ closeModal, identifer }: ModalProps) => {
   );
 };
 
-export default NewFolderAndPlayground;
+export default NewFolderAndPlayground
