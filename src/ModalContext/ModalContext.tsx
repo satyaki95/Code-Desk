@@ -1,12 +1,12 @@
 import React from "react";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 interface PopupFields {
-  value: boolean;
-  type: string;
+  value: boolean;  // if popup open or not
+  type: string;   // which type of popup is it
   identifier: {
-    folderId: string;
-    cardId: string;
+    folderId: string;  // the folder which is selected
+    cardId: string;   // the card which is selected
   };
 }
 interface ModalContextType {
@@ -27,7 +27,7 @@ export default function ModalProvider({ children }: { children: any }) {
     },
   };
 
-  const [isOpen, setIsOpen] = React.useState<PopupFields>({
+  const [isOpen, setIsOpen] = useState<PopupFields>({
     ...intialPopupFields,
   });
   const openModal = (value: PopupFields) => {

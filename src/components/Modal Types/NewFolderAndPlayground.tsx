@@ -26,6 +26,8 @@ const InputWithSelect = styled.div`
 
 const NewFolderAndPlayground = ({ closeModal, identifier }: Modalprops) => {
 
+  // access our card from folders state
+  
   const { createNewFolderAndPlayground } = useContext(PlaygroundContext)!;
 
   const languageOptions = [

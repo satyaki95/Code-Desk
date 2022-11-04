@@ -1,15 +1,16 @@
 import { title } from 'process';
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import { RiCloseFill } from 'react-icons/ri';
 import { PlaygroundContext } from '../../ModalContext/PlaygroundContext';
 import { CloseButton, Modalprops, Header, Input } from '../Modal'
 
 function CreateNewFolder({closeModal, identifier} : Modalprops) {
 
+ // access our card from folders state
+ 
+  const { folders, createNewFolder } = useContext(PlaygroundContext)!;
 
-  const { folders, createNewFolder } = React.useContext(PlaygroundContext)!;
-
-  const [title, setTitle] = React.useState('');
+  const [title, setTitle] = useState('');
 
 
   return (

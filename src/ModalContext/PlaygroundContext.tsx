@@ -1,6 +1,6 @@
 
 import React from "react";
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 interface PlaygroundContextType {
@@ -80,15 +80,16 @@ const initialItems = {
 
 
 export default function PlaygroundProvider({ children }: { children: any }) {
-  const [folders, setFolders] = React.useState(() => {
+  const [folders, setFolders] = useState(() => {
     let localData = JSON.parse(
       localStorage.getItem("playground-data") as string
     );
     localData = (localData === undefined || localData ===null || Object.keys(localData).length === 0)  ? null : localData;
     return localData || initialItems;
   });
+  
 
-  React.useEffect(() =>{
+  useEffect(() =>{
     localStorage.setItem("playground-data", JSON.stringify(folders));
   }, [folders]);
 

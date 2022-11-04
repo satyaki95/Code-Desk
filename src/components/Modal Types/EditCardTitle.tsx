@@ -1,5 +1,5 @@
 import { title } from 'process';
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import { RiCloseFill } from 'react-icons/ri';
 import { PlaygroundContext } from '../../ModalContext/PlaygroundContext';
 import { CloseButton, Modalprops, Header, Input } from '../Modal'
@@ -8,9 +8,11 @@ function EditCardTitle({closeModal, identifier} : Modalprops) {
 
   const {folderId, cardId} = identifier;
 
-  const { folders, editCardTitle } = React.useContext(PlaygroundContext)!;
+// access our card from folders state
 
-  const [title, setTitle] = React.useState(folders[folderId].items[cardId].title as string);
+  const { folders, editCardTitle } = useContext(PlaygroundContext)!;
+
+  const [title, setTitle] = useState(folders[folderId].items[cardId].title as string);
 
 
   return (

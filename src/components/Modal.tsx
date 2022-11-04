@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { RiCloseFill } from "react-icons/ri";
 import { ModalContext } from "../ModalContext/ModalContext";
@@ -65,7 +65,7 @@ export const Input = styled.div`
 `;
 
 const EditModal = ({ closeModal, isOpen }: { closeModal: () => void, isOpen : any }) => {
-  const PlaygroundFeatures = React.useContext(PlaygroundContext)!;
+  const PlaygroundFeatures = useContext(PlaygroundContext)!;
   const folders = PlaygroundFeatures.folders;
   console.log(folders);
 
