@@ -91,21 +91,28 @@ const RunCodeButton = styled.div`
   cursor: pointer;
 `;
 const SaveCodeButton = styled.button`
-  padding: 0.5rem 0.8rem;
-  text-align : center;
-  font-size : 1rem;
+  // padding: 0.4rem 1rem;
+  // text-align : center;
+  // font-size : 1rem;
   background: ${(props => props.theme.body)};
     color: ${(props => props.theme.mainHeading)};
+  // font-weight: 700;
+  // border: 1px solid green;
+  // border-radius: 2rem;
+  // // margin-right: 0.5rem auto;
+  // cursor: pointer;
+  // transition: 0.5s ease;
+  padding: 0.4rem 1rem;
+  // background-color: #0097d7 !important;
+  // color: white;
   font-weight: 700;
-  border: 1px solid green;
-  margin-right: 0.5rem auto;
-  cursor: pointer;
-  transition: 0.5s ease;
+  border-radius: 2rem;
+  border: 0;
 
   &: hover {
     color: white;
-    background-color: green !important;
-    border: 1px solid green;
+    background-color: gray !important;
+    
   }
 `;
 const SelectBars = styled.div`
