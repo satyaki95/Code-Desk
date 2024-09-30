@@ -1,0 +1,174 @@
+.right-container {
+  background: black;
+  padding: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    color: whitesmoke;
+    border-bottom: 1px solid #ffffff;
+
+    .title {
+      font-weight: 600;
+      font-size: 30px;
+
+      span {
+        font-weight: 400;
+      }
+    }
+
+    .add-folder {
+      display: flex;
+      cursor: pointer;
+      background: black;
+      border: none;
+      color: whitesmoke;
+    }
+  }
+
+  .folder-container {
+    .folder-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-bottom: 1px solid #ffffff;
+
+      .folder-header-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        color: whitesmoke;
+
+        .delete,
+        .edit {
+          cursor: pointer;
+        }
+
+        .delete {
+          color: #f40606;
+        }
+
+        .edit {
+          color: #04e1f1;
+        }
+
+        .delete:hover,
+        .edit:hover {
+          animation: shake 0.5s 1;
+
+          @keyframes shake {
+            0%,
+            100% {
+              transform: translate(1px, -2px) rotate(-1deg);
+            }
+            10%,
+            90% {
+              transform: translate(1px, 2px) rotate(0deg);
+            }
+            20%,
+            80% {
+              transform: translate(-1px, -1px) rotate(1deg);
+            }
+            30%,
+            70% {
+              transform: translate(3px, 2px) rotate(0deg);
+            }
+            40%,
+            60% {
+              transform: translate(-3px, 1px) rotate(0deg);
+            }
+            50% {
+              transform: translate(-1px, 2px) rotate(-1deg);
+            }
+          }
+        }
+
+        button {
+          color: whitesmoke;
+          background: black;
+          border: none;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .cards-container {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+      color: whitesmoke;
+
+      .card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 43%;
+        padding: 12px;
+        gap: 10px;
+        border: 2px solid #04e4f4;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px #00eeff;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        img {
+          width: 50px;
+        }
+
+        .title-container {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .delete {
+          color: #f40606;
+          padding-right: 5px;
+        }
+
+        .edit {
+          color: #04e1f1;
+        }
+
+        .delete:hover,
+        .edit:hover {
+          animation: shake 0.5s 1;
+
+          @keyframes shake {
+            0%,
+            100% {
+              transform: translate(1px, -2px) rotate(-1deg);
+            }
+            10%,
+            90% {
+              transform: translate(1px, 2px) rotate(0deg);
+            }
+            20%,
+            80% {
+              transform: translate(-1px, -1px) rotate(1deg);
+            }
+            30%,
+            70% {
+              transform: translate(3px, 2px) rotate(0deg);
+            }
+            40%,
+            60% {
+              transform: translate(-3px, 1px) rotate(0deg);
+            }
+            50% {
+              transform: translate(-1px, 2px) rotate(-1deg);
+            }
+          }
+        }
+
+        &:hover {
+          box-shadow: 2px 2px 15px #00eeff;
+          scale: 1.05;
+        }
+      }
+    }
+  }
+}

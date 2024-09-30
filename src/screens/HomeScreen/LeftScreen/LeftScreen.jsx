@@ -1,4 +1,7 @@
 import React from "react";
+import "./left.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const LeftScreen = () => {
   return (
@@ -8,7 +11,7 @@ const LeftScreen = () => {
         <h1>CODE DESK</h1>
         <h2>Code. Compile. Debug.</h2>
         <button>
-          <span class="material-icons">add</span>
+        <FontAwesomeIcon icon={faPlus} className="plus"/>
           <span>Create Playground</span>
         </button>
       </div>

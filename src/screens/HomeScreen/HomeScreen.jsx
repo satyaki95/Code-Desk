@@ -1,7 +1,7 @@
 import React from "react";
 import "./home.scss";
-import LeftScreen from "./LeftScreen";
-import RightScreen from "./RightScreen";
+import LeftScreen from "./LeftScreen/LeftScreen";
+import RightScreen from "./RightScreen/RightScreen";
 
 const HomeScreen = () => {
   return (
