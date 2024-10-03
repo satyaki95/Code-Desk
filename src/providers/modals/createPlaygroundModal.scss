@@ -10,6 +10,53 @@
   justify-content: center;
   align-items: center;
   .modal-body {
-    background: white;
+    background: black;
+    color: whitesmoke;
+    width: 30%;
+    padding: 30px;
+    box-shadow: 4px 4px 15px #00eeff;
+    border-radius: 20px;
+    border: 2px solid #04e4f4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      input,
+      select {
+        border: none;
+        background: #000f0b;
+        color: whitesmoke;
+        border: 1px solid #00eeff;
+        border-radius: 10px;
+        padding: 12px;
+      }
+      input:focus {
+        outline: none;
+      }
+      button {
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        background: #02c9d7;
+        color: white;
+        cursor: pointer;
+        transition-duration: 0.5s;
+      }
+      button:hover {
+        background: #00959f;
+      }
+    }
+    .close {
+      color: red;
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      height: 30px;
+    }
   }
 }
