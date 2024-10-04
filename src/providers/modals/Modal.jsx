@@ -4,7 +4,6 @@ import CreatePlaygroundModal from "./CreatePlaygroundModal";
 
 const Modal = () => {
   const modalFeatures = useContext(ModalContext);
-  console.log(modalFeatures.activeModal);
 
   return (
     <>

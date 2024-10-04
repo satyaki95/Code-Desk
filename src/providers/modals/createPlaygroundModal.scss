@@ -5,14 +5,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(153, 153, 153, 0.2);
+  background: #99999933;
   display: flex;
   justify-content: center;
   align-items: center;
   .modal-body {
     background: black;
     color: whitesmoke;
-    width: 30%;
+    // width: 30%;
     padding: 30px;
     box-shadow: 4px 4px 15px #00eeff;
     border-radius: 20px;
@@ -54,9 +54,9 @@
       color: red;
       cursor: pointer;
       position: absolute;
-      top: 15px;
-      right: 20px;
-      height: 30px;
+      top: 4px;
+      right: 8px;
+      height: 25px;
     }
   }
 }

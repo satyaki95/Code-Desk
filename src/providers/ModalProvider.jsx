@@ -8,7 +8,7 @@ const ModalProvider = ({ children }) => {
   const closeModal = () => {
     setModalType(null);
   };
-  console.log({modalType});
+
   
 
   const modalFeatures = {

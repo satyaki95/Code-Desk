@@ -7,7 +7,7 @@ import "./right.scss";
 import { playgroundContext } from "../../../providers/PlaygroundProvider";
 
 const RightScreen = () => {
-  const folders = useContext(playgroundContext);
+  const { folders } = useContext(playgroundContext);
 
   return (
     <div className="right-container">
