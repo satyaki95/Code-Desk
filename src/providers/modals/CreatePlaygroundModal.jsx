@@ -39,12 +39,12 @@ const CreatePlaygroundModal = () => {
 
         <div className="item">
           <p>Enter Folder Name</p>
-          <input name="folderName" />
+          <input name="folderName" required />
         </div>
 
         <div className="item">
           <p>Enter Card Name</p>
-          <input name="fileName" />
+          <input name="fileName" required />
         </div>
 
         <div className="item">
