@@ -2,14 +2,17 @@ import React, { createContext, useState } from "react";
 
 export const ModalContext = createContext();
 
-const ModalProvider = ({ children }) => {
+export const modalConstants = {
+  CREATE_PLAYGROUND: "CREATE_PLAYGROUND",
+  CREATE_FOLDER: "CREATE_FOLDER",
+};
+
+export const ModalProvider = ({ children }) => {
   const [modalType, setModalType] = useState(null);
 
   const closeModal = () => {
     setModalType(null);
   };
-
-  
 
   const modalFeatures = {
     openModal: setModalType,
@@ -23,5 +26,3 @@ const ModalProvider = ({ children }) => {
     </ModalContext.Provider>
   );
 };
-
-export default ModalProvider;

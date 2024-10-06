@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import PlaygroundScreen from "./screens/PlaygroundScreen/PlaygroundScreen";
 import PlaygroundProvider from "./providers/PlaygroundProvider";
-import ModalProvider from "./providers/ModalProvider";
+import {ModalProvider} from "./providers/ModalProvider";
 
 function App() {
   return (

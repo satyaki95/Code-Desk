@@ -5,9 +5,15 @@ import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./right.scss";
 import { playgroundContext } from "../../../providers/PlaygroundProvider";
+import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
 
 const RightScreen = () => {
   const { folders } = useContext(playgroundContext);
+  const modalFeatures = useContext(ModalContext);
+
+  const openCreateNewFolderModal = () => {
+    modalFeatures.openModal(modalConstants.CREATE_FOLDER);
+  };
 
   return (
     <div className="right-container">
@@ -15,7 +21,7 @@ const RightScreen = () => {
         <div className="title">
           <span>My</span> Playground
         </div>
-        <button className="add-folder">
+        <button className="add-folder" onClick={openCreateNewFolderModal}>
           <FontAwesomeIcon icon={faPlus} />
           <span>New Folder</span>
         </button>

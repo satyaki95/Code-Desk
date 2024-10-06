@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import "./left.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { ModalContext } from "../../../providers/ModalProvider";
+import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
 
 const LeftScreen = () => {
   const modalFeatures = useContext(ModalContext);
   const openCreatePlaygroundModal = () => {
-    modalFeatures.openModal("CREATE_PLAYGROUND");
+    modalFeatures.openModal(modalConstants.CREATE_PLAYGROUND);
   };
   return (
     <div className="left-container">

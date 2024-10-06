@@ -31,17 +31,22 @@ const intialData = [
 ];
 
 const defaultCode = {
-  ['cpp']:  `#include <iostream>\nint main() {\ncout<<"helo world";\n\treturn 0;\n}`,
-  ['javascript']: `console.log("hello world);`,
-  ['python']: `print("hello world")`,
-  ['java']:  `System.out.println("hello world")`
-}
+  ["cpp"]: `#include <iostream>\nint main() {\ncout<<"helo world";\n\treturn 0;\n}`,
+  ["javascript"]: `console.log("hello world);`,
+  ["python"]: `print("hello world")`,
+  ["java"]: `System.out.println("hello world")`,
+};
 
 const PlaygroundProvider = ({ children }) => {
-  const [folders, setFolders] = useState(intialData);
+  const [folders, setFolders] = useState(() => {
+    if (localStorage.getItem("data")) {
+      return JSON.parse(localStorage.getItem("data"));
+    }
+    return intialData;
+  });
 
   const createNewPlayground = (newPlayground) => {
-    const {folderName, fileName, language} = newPlayground;
+    const { folderName, fileName, language } = newPlayground;
     const newFolders = [...folders];
     newFolders.push({
       id: v4(),
@@ -54,21 +59,22 @@ const PlaygroundProvider = ({ children }) => {
           language: language,
         },
       ],
-    })
-    
+    });
+
     localStorage.setItem("data", JSON.stringify(newFolders));
     setFolders(newFolders);
-    
-  }
+  };
 
   useEffect(() => {
-    localStorage.setItem("data", JSON.stringify(folders));
+    if (!localStorage.getItem("data")) {
+      localStorage.setItem("data", JSON.stringify(folders));
+    }
   }, []);
 
   const playgroundFeatures = {
     folders,
-    createNewPlayground
-  }
+    createNewPlayground,
+  };
 
   return (
     <playgroundContext.Provider value={playgroundFeatures}>
