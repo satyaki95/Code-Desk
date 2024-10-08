@@ -1,0 +1,24 @@
+.inputContaainer{
+    display: flex;
+    gap: 10px;
+    input{
+        border: none;
+        background: #000f0b;
+        color: whitesmoke;
+        border: 1px solid #00eeff;
+        border-radius: 10px;
+        padding: 12px;
+    }
+    button {
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        background: #02c9d7;
+        color: white;
+        cursor: pointer;
+        transition-duration: 0.5s;
+      }
+      button:hover {
+        background: #00959f;
+      }
+}

@@ -4,11 +4,11 @@ import { faFolderOpen, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./right.scss";
-import { playgroundContext } from "../../../providers/PlaygroundProvider";
+import { PlaygroundContext } from "../../../providers/PlaygroundProvider";
 import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
 
 const RightScreen = () => {
-  const { folders } = useContext(playgroundContext);
+  const { folders } = useContext(PlaygroundContext);
   const modalFeatures = useContext(ModalContext);
 
   const openCreateNewFolderModal = () => {

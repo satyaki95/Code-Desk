@@ -3,11 +3,11 @@ import "./createPlaygroundModal.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { ModalContext } from "../ModalProvider";
-import { playgroundContext } from "../PlaygroundProvider";
+import { PlaygroundContext } from "../PlaygroundProvider";
 
 const CreatePlaygroundModal = () => {
   const modalFeatures = useContext(ModalContext);
-  const playgroundfeatures = useContext(playgroundContext);
+  const playgroundfeatures = useContext(PlaygroundContext);
 
   const closeModal = () => {
     modalFeatures.closeModal();
