@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { json } from "react-router-dom";
 import { v4 } from "uuid";
 
 export const PlaygroundContext = createContext();
@@ -80,6 +81,16 @@ const PlaygroundProvider = ({ children }) => {
     setFolders(allFolders);
   };
 
+
+  const deleteFolder = (id) => {
+    const updatedFolderList = folders.filter((folderItem) => {
+      return folderItem.id !==  id;
+    })
+
+    localStorage.setItem('data', JSON.stringify(updatedFolderList));
+    setFolders(updatedFolderList);
+  }
+
   useEffect(() => {
     if (!localStorage.getItem("data")) {
       localStorage.setItem("data", JSON.stringify(intialData));
@@ -90,6 +101,7 @@ const PlaygroundProvider = ({ children }) => {
     folders,
     createNewPlayground,
     createNewFolder,
+    deleteFolder
   };
 
   return (
