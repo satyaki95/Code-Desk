@@ -1,6 +1,8 @@
 .right-container {
   background: black;
   padding: 20px;
+  height: 100%;
+  overflow: scroll;
 
   .header {
     display: flex;

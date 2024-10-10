@@ -39,10 +39,12 @@ const defaultCode = {
 
 const PlaygroundProvider = ({ children }) => {
   const [folders, setFolders] = useState(() => {
-    if (localStorage.getItem("data")) {
-      return JSON.parse(localStorage.getItem("data"));
+    const data = localStorage.getItem("data");
+    if (data && typeof data === "string") {
+      return JSON.parse(data);
+    } else {
+      return intialData;
     }
-    return intialData;
   });
 
   const createNewPlayground = (newPlayground) => {
@@ -72,17 +74,15 @@ const PlaygroundProvider = ({ children }) => {
       files: [],
     };
 
+    const allFolders = [...folders, newFolder];
 
-    const allFolders  =  [...folders, newFolder];
-
-
-    localStorage.setItem("data", allFolders);
+    localStorage.setItem("data", JSON.stringify(allFolders));
     setFolders(allFolders);
   };
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
-      localStorage.setItem("data", JSON.stringify(folders));
+      localStorage.setItem("data", JSON.stringify(intialData));
     }
   }, []);
 
