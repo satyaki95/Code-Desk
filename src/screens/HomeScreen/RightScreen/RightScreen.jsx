@@ -9,9 +9,14 @@ import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
 
 const Folder = ({ folderTitle, cards, id }) => {
   const { deleteFolder } = useContext(PlaygroundContext);
+  const { openModal } = useContext(ModalContext);
 
   const onDeleteFolder = () => {
     deleteFolder(id);
+  };
+
+  const onEditFolderTitle = () => {
+    openModal(modalConstants.UPDATE_FOLDER_TITLE);
   };
 
   return (
@@ -27,7 +32,11 @@ const Folder = ({ folderTitle, cards, id }) => {
             className="delete"
             onClick={onDeleteFolder}
           />
-          <FontAwesomeIcon icon={faPenToSquare} className="edit" />
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            className="edit"
+            onClick={onEditFolderTitle}
+          />
           <button>
             <FontAwesomeIcon icon={faPlus} />
             <span>New Playground</span>
@@ -56,7 +65,7 @@ const Folder = ({ folderTitle, cards, id }) => {
 };
 
 const RightScreen = () => {
-  const { folders, deleteFolder } = useContext(PlaygroundContext);
+  const { folders } = useContext(PlaygroundContext);
   const modalFeatures = useContext(ModalContext);
 
   const openCreateNewFolderModal = () => {
