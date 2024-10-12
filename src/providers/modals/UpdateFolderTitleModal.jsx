@@ -7,13 +7,13 @@ import { ModalContext } from "../ModalProvider";
 import { PlaygroundContext } from "../PlaygroundProvider";
 
 const UpdateFolderTitleModal = () => {
-  const { closeModal } = useContext(ModalContext);
+  const { closeModal, modalPayload } = useContext(ModalContext);
   const { editFolderTitle } = useContext(PlaygroundContext);
 
   const onSubmitModal = (e) => {
     e.preventDefault();
     const folderName = e.target.folderName.value;
-    editFolderTitle(folderName);
+    editFolderTitle(folderName, modalPayload);
     closeModal();
   };
   return (

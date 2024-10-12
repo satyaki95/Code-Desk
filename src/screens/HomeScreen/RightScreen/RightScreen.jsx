@@ -9,13 +9,14 @@ import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
 
 const Folder = ({ folderTitle, cards, id }) => {
   const { deleteFolder } = useContext(PlaygroundContext);
-  const { openModal } = useContext(ModalContext);
+  const { openModal, setModalPayload } = useContext(ModalContext);
 
   const onDeleteFolder = () => {
     deleteFolder(id);
   };
 
   const onEditFolderTitle = () => {
+    setModalPayload(id);
     openModal(modalConstants.UPDATE_FOLDER_TITLE);
   };
 

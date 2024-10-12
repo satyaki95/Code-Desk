@@ -97,7 +97,9 @@ const PlaygroundProvider = ({ children }) => {
       }
       return folderItem;
     });
-    localStorage.setItem("data", json.stringify(updatedFolderList));
+    console.log(updatedFolderList);
+    
+    localStorage.setItem("data", JSON.stringify(updatedFolderList));
     setFolders(updatedFolderList);
   };
 
@@ -113,7 +115,6 @@ const PlaygroundProvider = ({ children }) => {
     createNewFolder,
     deleteFolder,
     editFolderTitle,
-    payload
   };
 
   return (
