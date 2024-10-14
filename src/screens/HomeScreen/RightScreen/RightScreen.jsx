@@ -46,6 +46,11 @@ const Folder = ({ folderTitle, cards, id }) => {
       </div>
       <div className="cards-container">
         {cards?.map((file, index) => {
+          const onEdit = () => {
+            setModalPayload({ fileId: file.id, folderId: id });
+            openModal(modalConstants.UPDATE_FILE_TITLE);
+          };
+
           return (
             <div className="card" key={index}>
               <img src="logo.png" alt="" />
@@ -55,7 +60,11 @@ const Folder = ({ folderTitle, cards, id }) => {
               </div>
               <div>
                 <FontAwesomeIcon icon={faTrashCan} className="delete" />
-                <FontAwesomeIcon className="edit" icon={faPenToSquare} />
+                <FontAwesomeIcon
+                  className="edit"
+                  icon={faPenToSquare}
+                  onClick={onEdit}
+                />
               </div>
             </div>
           );

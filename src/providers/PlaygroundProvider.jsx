@@ -98,9 +98,26 @@ const PlaygroundProvider = ({ children }) => {
       return folderItem;
     });
     console.log(updatedFolderList);
-    
+
     localStorage.setItem("data", JSON.stringify(updatedFolderList));
     setFolders(updatedFolderList);
+  };
+
+  const editFileTitle = (newFileName, folderId, fileId) => {
+    const copiedFolders = [...folders];
+    for (let i = 0; i < copiedFolders.length; i++) {
+      if (copiedFolders[i].id === folderId) {
+        copiedFolders[i].files.map((fileItem) => {
+          if (fileItem.id === fileId) {
+            fileItem.title = newFileName;
+            return fileItem;
+          }
+          return fileItem;
+        });
+      }
+    }
+    localStorage.setItem("data", JSON.stringify(copiedFolders));
+    setFolders(copiedFolders);
   };
 
   useEffect(() => {
@@ -115,6 +132,7 @@ const PlaygroundProvider = ({ children }) => {
     createNewFolder,
     deleteFolder,
     editFolderTitle,
+    editFileTitle
   };
 
   return (

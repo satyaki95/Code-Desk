@@ -6,6 +6,7 @@ export const modalConstants = {
   CREATE_PLAYGROUND: "CREATE_PLAYGROUND",
   CREATE_FOLDER: "CREATE_FOLDER",
   UPDATE_FOLDER_TITLE: "UPDATE_FOLDER_TITLE",
+  UPDATE_FILE_TITLE: "UPDATE_FILE_TITLE"
 };
 
 export const ModalProvider = ({ children }) => {
