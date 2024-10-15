@@ -8,7 +8,7 @@ import { PlaygroundContext } from "../../../providers/PlaygroundProvider";
 import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
 
 const Folder = ({ folderTitle, cards, id }) => {
-  const { deleteFolder } = useContext(PlaygroundContext);
+  const { deleteFolder, deleteFile } = useContext(PlaygroundContext);
   const { openModal, setModalPayload } = useContext(ModalContext);
 
   const onDeleteFolder = () => {
@@ -51,6 +51,10 @@ const Folder = ({ folderTitle, cards, id }) => {
             openModal(modalConstants.UPDATE_FILE_TITLE);
           };
 
+          const onDeleteFile = () => {
+            deleteFile(id, file.id);
+          };
+
           return (
             <div className="card" key={index}>
               <img src="logo.png" alt="" />
@@ -59,7 +63,11 @@ const Folder = ({ folderTitle, cards, id }) => {
                 <span>Language: {file?.language}</span>
               </div>
               <div>
-                <FontAwesomeIcon icon={faTrashCan} className="delete" />
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  className="delete"
+                  onClick={onDeleteFile}
+                />
                 <FontAwesomeIcon
                   className="edit"
                   icon={faPenToSquare}

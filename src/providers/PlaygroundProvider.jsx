@@ -120,6 +120,21 @@ const PlaygroundProvider = ({ children }) => {
     setFolders(copiedFolders);
   };
 
+  const deleteFile = (folderId, fileId) => {
+    const copiedFolders = [...folders];
+    for (let i = 0; i < copiedFolders.length; i++) {
+      if (copiedFolders[i].id === folderId) {
+        const files = [...copiedFolders[i].files];
+        copiedFolders[i].files = files.filter((file) => {
+          return file.id !== fileId;
+        })
+        break;
+      }
+    }
+    localStorage.setItem("data", JSON.stringify(copiedFolders));
+    setFolders(copiedFolders);
+  }
+
   useEffect(() => {
     if (!localStorage.getItem("data")) {
       localStorage.setItem("data", JSON.stringify(intialData));
@@ -132,7 +147,8 @@ const PlaygroundProvider = ({ children }) => {
     createNewFolder,
     deleteFolder,
     editFolderTitle,
-    editFileTitle
+    editFileTitle,
+    deleteFile
   };
 
   return (
