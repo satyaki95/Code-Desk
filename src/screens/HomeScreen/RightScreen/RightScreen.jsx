@@ -20,6 +20,11 @@ const Folder = ({ folderTitle, cards, id }) => {
     openModal(modalConstants.UPDATE_FOLDER_TITLE);
   };
 
+  const openCreateCardModal = () => {
+    setModalPayload(id);
+    openModal(modalConstants.CREATE_CARD);
+  };
+
   return (
     <div className="folder-container" key={id} id={id}>
       <div className="folder-header">
@@ -38,7 +43,7 @@ const Folder = ({ folderTitle, cards, id }) => {
             className="edit"
             onClick={onEditFolderTitle}
           />
-          <button>
+          <button onClick={openCreateCardModal}>
             <FontAwesomeIcon icon={faPlus} />
             <span>New Playground</span>
           </button>

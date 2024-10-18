@@ -29,7 +29,7 @@ const CreateFolderModal = () => {
         <h1>Create New Folder</h1>
         <div className="inputContaainer">
           <input name="folderName" placeholder="Enter Folder Name" />
-          <button type="submit">Create Folder</button>
+          <button type="submit">Create New Playground</button>
         </div>
       </form>
     </div>

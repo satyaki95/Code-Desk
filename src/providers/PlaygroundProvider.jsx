@@ -31,7 +31,7 @@ const intialData = [
   },
 ];
 
-const defaultCode = {
+export const defaultCode = {
   ["cpp"]: `#include <iostream>\nint main() {\ncout<<"helo world";\n\treturn 0;\n}`,
   ["javascript"]: `console.log("hello world);`,
   ["python"]: `print("hello world")`,
@@ -127,13 +127,25 @@ const PlaygroundProvider = ({ children }) => {
         const files = [...copiedFolders[i].files];
         copiedFolders[i].files = files.filter((file) => {
           return file.id !== fileId;
-        })
+        });
         break;
       }
     }
     localStorage.setItem("data", JSON.stringify(copiedFolders));
     setFolders(copiedFolders);
-  }
+  };
+
+  const createPlayground = (folderId, file) => {
+    const copiedFolders = [...folders];
+    for (let i = 0; i < copiedFolders.length; i++) {
+      if (copiedFolders[i].id === folderId) {
+        copiedFolders[i].files.push(file);
+        break;
+      }
+    }
+    localStorage.setItem("data", JSON.stringify(copiedFolders));
+    setFolders(folders);
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
@@ -148,7 +160,8 @@ const PlaygroundProvider = ({ children }) => {
     deleteFolder,
     editFolderTitle,
     editFileTitle,
-    deleteFile
+    deleteFile,
+    createPlayground,
   };
 
   return (
