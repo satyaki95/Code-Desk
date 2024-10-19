@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./playgroundScreen.scss";
-import { faCloudArrowUp, faFileUpload } from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowDown, faCloudArrowUp, faFileUpload } from "@fortawesome/free-solid-svg-icons";
 const PlaygroundScreen = () => {
   const params = useParams();
   const { fileId, folderId } = params;
@@ -33,8 +33,13 @@ const PlaygroundScreen = () => {
         <div className="output-container">
           <div className="output-header">
             <b>Output:</b>
+            <label htmlFor="output">
+            <FontAwesomeIcon icon={faCloudArrowDown} className="export_file" style={{ color: "#63E6BE" }} />
+            <span className="">Export Output</span>
+            </label>
             <button>Export Output</button>
           </div>
+          <textarea></textarea>
         </div>
       </div>
     </div>

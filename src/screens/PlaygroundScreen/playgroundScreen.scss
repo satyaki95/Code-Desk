@@ -51,10 +51,31 @@
         flex-grow: 1;
         background: black;
         color: #04e4f4;
+        resize: none;
+        outline: none;
+        border: none;
+        font-size: 22px;
       }
     }
     .output-container {
-      border: 1px solid #04e4f4;
+      display: flex;
+      flex-direction: column;
+      color: whitesmoke;
+      .output-header {
+        background: linear-gradient(135deg, rgb(1, 43, 36) 60%, rgb(11, 117, 144));
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      textarea {
+        flex-grow: 1;
+        background: black;
+        color: #04e4f4;
+        resize: none;
+        outline: none;
+        border: none;
+        font-size: 22px;
+      }
     }
   }
 }
