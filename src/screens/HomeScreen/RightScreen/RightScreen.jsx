@@ -6,10 +6,12 @@ import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./right.scss";
 import { PlaygroundContext } from "../../../providers/PlaygroundProvider";
 import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
+import { useNavigate } from "react-router-dom";
 
 const Folder = ({ folderTitle, cards, id }) => {
   const { deleteFolder, deleteFile } = useContext(PlaygroundContext);
   const { openModal, setModalPayload } = useContext(ModalContext);
+  const navigate = useNavigate();
 
   const onDeleteFolder = () => {
     deleteFolder(id);
@@ -60,8 +62,16 @@ const Folder = ({ folderTitle, cards, id }) => {
             deleteFile(id, file.id);
           };
 
+          const navigateToPlaygroundScreen = () => {
+            navigate(`/playground/${file.id}/${id}`);
+          };
+
           return (
-            <div className="card" key={index}>
+            <div
+              className="card"
+              key={index}
+              onClick={navigateToPlaygroundScreen}
+            >
               <img src="logo.png" alt="" />
               <div className="title-container">
                 <span>{file?.title}</span>
