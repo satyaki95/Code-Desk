@@ -24,7 +24,7 @@ const PlaygroundScreen = () => {
             <b>Input:</b>
             <label htmlFor="input">
             <FontAwesomeIcon icon={faCloudArrowUp} className="uplode_file" style={{ color: "#63E6BE" }} />
-            <span className="">Import input</span>
+            <span className=""> Import input</span>
             </label>
             <input type="file" />
           </div>
@@ -35,7 +35,7 @@ const PlaygroundScreen = () => {
             <b>Output:</b>
             <label htmlFor="output">
             <FontAwesomeIcon icon={faCloudArrowDown} className="export_file" style={{ color: "#63E6BE" }} />
-            <span className="">Export Output</span>
+            <span className=""> Export Output</span>
             </label>
             <button>Export Output</button>
           </div>

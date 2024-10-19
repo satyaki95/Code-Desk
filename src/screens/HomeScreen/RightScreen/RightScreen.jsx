@@ -78,7 +78,10 @@ const Folder = ({ folderTitle, cards, id }) => {
                 <span>Language: {file?.language}</span>
               </div>
               <div>
-                <FontAwesomeIcon
+               <div onClick={(e) => {
+                      e.stopPropagation(); //stop click propagation from child to parent
+                    }}>
+               <FontAwesomeIcon
                   icon={faTrashCan}
                   className="delete"
                   onClick={onDeleteFile}
@@ -88,6 +91,7 @@ const Folder = ({ folderTitle, cards, id }) => {
                   icon={faPenToSquare}
                   onClick={onEdit}
                 />
+               </div>
               </div>
             </div>
           );
