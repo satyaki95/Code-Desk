@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderOpen, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
-
 import "./right.scss";
 import { PlaygroundContext } from "../../../providers/PlaygroundProvider";
 import { modalConstants, ModalContext } from "../../../providers/ModalProvider";
@@ -78,20 +77,22 @@ const Folder = ({ folderTitle, cards, id }) => {
                 <span>Language: {file?.language}</span>
               </div>
               <div>
-               <div onClick={(e) => {
-                      e.stopPropagation(); //stop click propagation from child to parent
-                    }}>
-               <FontAwesomeIcon
-                  icon={faTrashCan}
-                  className="delete"
-                  onClick={onDeleteFile}
-                />
-                <FontAwesomeIcon
-                  className="edit"
-                  icon={faPenToSquare}
-                  onClick={onEdit}
-                />
-               </div>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation(); //stop click propagation from child to parent
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    className="delete"
+                    onClick={onDeleteFile}
+                  />
+                  <FontAwesomeIcon
+                    className="edit"
+                    icon={faPenToSquare}
+                    onClick={onEdit}
+                  />
+                </div>
               </div>
             </div>
           );

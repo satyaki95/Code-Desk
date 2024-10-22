@@ -2,7 +2,11 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./playgroundScreen.scss";
-import { faCloudArrowDown, faCloudArrowUp, faFileUpload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudArrowDown,
+  faCloudArrowUp,
+} from "@fortawesome/free-solid-svg-icons";
+import EditorContainer from "./EditorContainer";
 const PlaygroundScreen = () => {
   const params = useParams();
   const { fileId, folderId } = params;
@@ -18,28 +22,37 @@ const PlaygroundScreen = () => {
         </div>
       </div>
       <div className="content-container">
-        <div className="editor-container">Editor Container</div>
-        <div className="input-container">
-          <div className="input-header">
-            <b>Input:</b>
-            <label htmlFor="input">
-            <FontAwesomeIcon icon={faCloudArrowUp} className="uplode_file" style={{ color: "#63E6BE" }} />
-            <span className=""> Import input</span>
+        <div className="editor-container">
+          <EditorContainer />
+        </div>
+        <div className="input-output-container">
+          <div className="input-output-header">
+            <b>Input :</b>
+            <label htmlFor="input" className="icon-container">
+              <FontAwesomeIcon
+                icon={faCloudArrowUp}
+                className="uplode_file"
+                style={{ color: "#63E6BE" }}
+              />
+              <span className=""> Import input</span>
             </label>
-            <input type="file" />
+            <input type="file" id="input" />
           </div>
           <textarea></textarea>
         </div>
-        <div className="output-container">
-          <div className="output-header">
-            <b>Output:</b>
-            <label htmlFor="output">
-            <FontAwesomeIcon icon={faCloudArrowDown} className="export_file" style={{ color: "#63E6BE" }} />
-            <span className=""> Export Output</span>
-            </label>
-            <button>Export Output</button>
+        <div className="input-output-container">
+          <div className="input-output-header">
+            <b>Output :</b>
+            <button className="icon-container">
+              <FontAwesomeIcon
+                icon={faCloudArrowDown}
+                className="export_file"
+                style={{ color: "#63E6BE" }}
+              />
+              <span className=""> Export Output</span>
+            </button>
           </div>
-          <textarea></textarea>
+          <textarea readOnly></textarea>
         </div>
       </div>
     </div>

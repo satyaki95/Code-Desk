@@ -1,0 +1,16 @@
+.root-editor-container{
+    background-color: blue;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .editor-header,.editor-footer{
+        background: purple;
+        .edit {
+            color: #04e1f1;
+          }
+    }
+    .editor-body{
+        background-color: whitesmoke;
+        flex-grow: 1;
+    }
+}
