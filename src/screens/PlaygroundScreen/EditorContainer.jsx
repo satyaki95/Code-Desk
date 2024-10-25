@@ -1,7 +1,11 @@
 import React from "react";
 import "./editorContainer.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudArrowDown,
+  faCloudArrowUp,
+} from "@fortawesome/free-solid-svg-icons";
 
 const EditorContainer = () => {
   return (
@@ -9,14 +13,11 @@ const EditorContainer = () => {
       <div className="editor-header">
         <div className="editor-left-container">
           <b>{"Title"}</b>
-          <FontAwesomeIcon
-            icon={faPenToSquare}
-            className="edit"
-          />
+          <FontAwesomeIcon icon={faPenToSquare} className="edit" />
           <button>Save Code</button>
         </div>
         <div className="editor-right-container">
-        <select name="language">
+          <select name="language">
             <option value="cpp">CPP</option>
             <option value="java">Java</option>
             <option value="python">Python</option>
@@ -30,7 +31,35 @@ const EditorContainer = () => {
         </div>
       </div>
       <div className="editor-body">body</div>
-      <div className="editor-footer">footer</div>
+      <div className="editor-footer">
+        <button>
+          <FontAwesomeIcon
+            icon={faExpand}
+            className="full_screen"
+            style={{ color: "#63E6BE" }}
+          />
+        </button>
+        <label htmlFor="import-code">
+          <FontAwesomeIcon
+            icon={faCloudArrowUp}
+            className="import_code"
+            style={{ color: "#63E6BE" }}
+          />
+          <span>Import Code</span>
+        </label>
+        <input type="file" id="import-code" />
+        <button>
+          <FontAwesomeIcon
+            icon={faCloudArrowDown}
+            className="export_code"
+            style={{ color: "#63E6BE" }}
+          />
+          <span>Export Code</span>
+        </button>
+        <div className="run-code">
+        <button>Run Code</button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,16 +1,126 @@
-.root-editor-container{
-    background-color: blue;
-    height: 100%;
+.root-editor-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: whitesmoke;
+  .editor-header,
+  .editor-footer {
+    background: linear-gradient(100deg, rgb(1, 61, 76) 10%, rgb(1, 43, 36));
     display: flex;
-    flex-direction: column;
-    .editor-header,.editor-footer{
-        background: purple;
-        .edit {
-            color: #04e1f1;
-          }
+    justify-content: space-between;
+    .edit {
+      color: #04e1f1;
     }
-    .editor-body{
-        background-color: whitesmoke;
-        flex-grow: 1;
+    .edit:hover {
+      animation: shake 0.5s 1;
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translate(1px, -2px) rotate(-1deg);
+        }
+        10%,
+        90% {
+          transform: translate(1px, 2px) rotate(0deg);
+        }
+        20%,
+        80% {
+          transform: translate(-1px, -1px) rotate(1deg);
+        }
+        30%,
+        70% {
+          transform: translate(3px, 2px) rotate(0deg);
+        }
+        40%,
+        60% {
+          transform: translate(-3px, 1px) rotate(0deg);
+        }
+        50% {
+          transform: translate(-1px, 2px) rotate(-1deg);
+        }
+      }
     }
+  }
+  .editor-header {
+    button,
+    select {
+      border: none;
+      border-radius: 10px;
+      padding: 6.6px;
+      cursor: pointer;
+    }
+    button {
+      background: #00949e;
+      color: whitesmoke;
+      cursor: pointer;
+      transition-duration: 0.5s;
+    }
+    button:hover {
+      background: #00555b;
+    }
+    select {
+      background: #000f0b;
+      color: whitesmoke;
+      border: 1px solid #00eeff;
+      outline: none;
+    }
+  }
+  .editor-body {
+    background-color: black;
+    flex-grow: 1;
+  }
+  .editor-right-container,
+  .editor-left-container {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+  }
+  .editor-footer {
+    align-items: center;
+    input {
+      display: none;
+    }
+    label,
+    button {
+      font-size: 20px;
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      gap: 10px;
+      color: whitesmoke;
+      cursor: pointer;
+    }
+    button {
+      background: transparent;
+      font-family: "Playwrite GB S", cursive;
+      outline: none;
+      border: none;
+    }
+    span {
+      font-size: 10px;
+    }
+    .run-code {
+      display: flex;
+      gap: 10px;
+      padding: 8px;
+      align-items: center;
+      button {
+        border: none;
+        border-radius: 10px;
+        padding: 6.6px;
+        background: #00949e;
+        color: whitesmoke;
+        cursor: pointer;
+        transition-duration: 0.5s;
+        font-size: 12px;
+        font-family: sans-serif;
+      }
+      button:hover {
+        background: #00555b;
+      }
+    }
+  }
 }
