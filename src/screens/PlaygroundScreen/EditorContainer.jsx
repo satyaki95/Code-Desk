@@ -1,11 +1,20 @@
 import React from "react";
 import "./editorContainer.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import {
+  faExpand,
+  faPenToSquare,
   faCloudArrowDown,
   faCloudArrowUp,
 } from "@fortawesome/free-solid-svg-icons";
+import { Editor } from "@monaco-editor/react";
+
+
+
+const editorOptions = {
+  fontSize: 16,
+  theme: "vs-dark"
+}
 
 const EditorContainer = () => {
   return (
@@ -30,7 +39,13 @@ const EditorContainer = () => {
           </select>
         </div>
       </div>
-      <div className="editor-body">body</div>
+      <div className="editor-body">
+        <Editor
+          height={"100%"}
+          language={"javascript"}
+          options={editorOptions}
+        />
+      </div>
       <div className="editor-footer">
         <button>
           <FontAwesomeIcon
@@ -57,7 +72,7 @@ const EditorContainer = () => {
           <span>Export Code</span>
         </button>
         <div className="run-code">
-        <button>Run Code</button>
+          <button>Run Code</button>
         </div>
       </div>
     </div>
