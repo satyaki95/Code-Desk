@@ -33,7 +33,7 @@ const intialData = [
 
 export const defaultCode = {
   ["cpp"]: `#include <iostream>\nint main() {\ncout<<"helo world";\n\treturn 0;\n}`,
-  ["javascript"]: `console.log("hello world);`,
+  ["javascript"]: `console.log("hello world");`,
   ["python"]: `print("hello world")`,
   ["java"]: `System.out.println("hello world")`,
 };
@@ -147,6 +147,49 @@ const PlaygroundProvider = ({ children }) => {
     setFolders(folders);
   };
 
+  const getDefaultCode = (fileId, folderId) => {
+    for (let i = 0; i < folders.length; i++) {
+      if (folders[i].id === folderId) {
+        for (let j = 0; j < folders[i].files.length; j++) {
+          const currentFile = folders[i].files[j];
+          if (currentFile.id === fileId) {
+            return currentFile.code;
+          }
+        }
+      }
+    }
+  };
+
+  const updateLanguage = (fileId, folderId, language) => {
+    const newFolders = [...folders];
+    for (let i = 0; i < newFolders.length; i++) {
+      if (newFolders[i].id === folderId) {
+        for (let j = 0; j < newFolders[i].files.length; j++) {
+          const currentFile = newFolders[i].files[j];
+          if (currentFile.id === fileId) {
+            newFolders[i].files[j].code = defaultCode[language];
+            newFolders[i].files[j].language = language;
+          }
+        }
+      }
+    }
+    localStorage.setItem("data", JSON.stringify(newFolders));
+    setFolders(newFolders);
+  };
+
+  const getLangauge = (fileId, folderId) => {
+    for (let i = 0; i < folders.length; i++) {
+      if (folders[i].id === folderId) {
+        for (let j = 0; j < folders[i].files.length; j++) {
+          const currentFile = folders[i].files[j];
+          if (currentFile.id === fileId) {
+            return currentFile.language;
+          }
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("data")) {
       localStorage.setItem("data", JSON.stringify(intialData));
@@ -162,6 +205,9 @@ const PlaygroundProvider = ({ children }) => {
     editFileTitle,
     deleteFile,
     createPlayground,
+    getDefaultCode,
+    getLangauge,
+    updateLanguage,
   };
 
   return (

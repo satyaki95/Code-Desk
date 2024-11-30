@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "./editorContainer.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,6 +8,7 @@ import {
   faCloudArrowUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { Editor } from "@monaco-editor/react";
+import { PlaygroundContext } from "../../providers/PlaygroundProvider";
 
 const editorOptions = {
   fontSize: 16,
@@ -21,11 +22,18 @@ const fileExtensionMaping = {
   java: "java",
 };
 
-const EditorContainer = (fileId, folderId) => {
-  const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("cpp");
+const EditorContainer = ({ fileId, folderId }) => {
+  const { getDefaultCode, getLangauge, updateLanguage } =
+    useContext(PlaygroundContext);
+
+  const [code, setCode] = useState(() => {
+    return getDefaultCode(fileId, folderId);
+  });
+
+  const [language, setLanguage] = useState(() => getLangauge(fileId, folderId));
   const [theme, setTheme] = useState("vs-dark");
-  const codeRef = useRef();
+  const codeRef = useRef(code);
+
   const onChangeCode = (newCode) => {
     codeRef.current = newCode;
   };
@@ -61,6 +69,8 @@ const EditorContainer = (fileId, folderId) => {
   };
 
   const onChangeLanguage = (e) => {
+    updateLanguage(fileId, folderId, e.target.value);
+    setCode(getDefaultCode(fileId, folderId));
     setLanguage(e.target.value);
   };
 
