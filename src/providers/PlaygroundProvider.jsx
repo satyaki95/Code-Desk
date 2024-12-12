@@ -190,6 +190,22 @@ const PlaygroundProvider = ({ children }) => {
     }
   };
 
+  const saveCode = (fileId, folderId, newCode) => {
+    const newFolders = [...folders];
+    for (let i = 0; i < newFolders.length; i++) {
+      if (newFolders[i].id === folderId) {
+        for (let j = 0; j < newFolders[i].files.length; j++) {
+          const currentFile = newFolders[i].files[j];
+          if (currentFile.id === fileId) {
+            newFolders[i].files[j].code = newCode;
+          }
+        }
+      }
+    }
+    localStorage.setItem("data", JSON.stringify(newFolders));
+    setFolders(newFolders);
+  }
+
   useEffect(() => {
     if (!localStorage.getItem("data")) {
       localStorage.setItem("data", JSON.stringify(intialData));
@@ -208,6 +224,7 @@ const PlaygroundProvider = ({ children }) => {
     getDefaultCode,
     getLangauge,
     updateLanguage,
+    saveCode
   };
 
   return (

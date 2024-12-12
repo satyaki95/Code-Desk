@@ -23,7 +23,7 @@ const fileExtensionMaping = {
 };
 
 const EditorContainer = ({ fileId, folderId }) => {
-  const { getDefaultCode, getLangauge, updateLanguage } =
+  const { getDefaultCode, getLangauge, updateLanguage, saveCode } =
     useContext(PlaygroundContext);
 
   const [code, setCode] = useState(() => {
@@ -77,13 +77,20 @@ const EditorContainer = ({ fileId, folderId }) => {
   const onChangeTheme = (e) => {
     setTheme(e.target.value);
   };
+
+  const onSaveCode = () => {
+    saveCode(fileId, folderId, codeRef.current);
+    alert(`Code Save Successfully`);
+  };
+
+  
   return (
     <div className="root-editor-container">
       <div className="editor-header">
         <div className="editor-left-container">
           <b>{"Title"}</b>
           <FontAwesomeIcon icon={faPenToSquare} className="edit" />
-          <button>Save Code</button>
+          <button onClick={onSaveCode}>Save Code</button>
         </div>
         <div className="editor-right-container">
           <select onChange={onChangeLanguage} value={language}>
